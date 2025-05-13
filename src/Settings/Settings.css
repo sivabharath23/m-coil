@@ -1,0 +1,200 @@
+/* Theme Selector */
+.theme-selector {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* gap: 15px; */
+    margin-top: 20px;
+}
+
+.theme-option {
+    margin: 10px;
+    position: relative;
+    height: 52px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: flex-end;
+    padding: 15px;
+    color: var(--primary);
+    font-weight: 500;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid #ccc;
+}
+
+.theme-option input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-option::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.9;
+}
+
+.theme-option[for="red"]::before {
+    background: linear-gradient(135deg, #ff4d4d, #cc0000);
+}
+
+.theme-option[for="orange"]::before {
+    background: linear-gradient(135deg, #ff9966, #ff6600);
+}
+
+.theme-option[for="blue"]::before {
+    background: linear-gradient(135deg, #66b3ff, #0066cc);
+}
+
+.theme-option[for="purple"]::before {
+    background: linear-gradient(135deg, #b388ff, #7c4dff);
+}
+
+.theme-option.active {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 3px var(--white), 0 0 0 6px var(--primary);
+}
+
+.theme-option:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.theme-label {
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Form Elements */
+.form-select {
+    background-color: var(--light-gray);
+    border: 2px solid var(--light-gray);
+    border-radius: var(--radius-md);
+    padding: 12px 20px;
+    font-size: 1rem;
+    color: var(--dark);
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.25rem rgba(0, 102, 204, 0.25);
+    outline: none;
+}
+
+/* Buttons */
+.btn {
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+.btn-outline-danger {
+    background: transparent;
+    border: 2px solid var(--danger);
+    color: var(--danger);
+}
+
+.btn-outline-danger:hover {
+    background: var(--danger);
+    color: white;
+}
+
+.btn-success {
+    background: var(--success);
+    color: white;
+}
+
+.btn-success:hover {
+    background: var(--success-hover);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .theme-selector {
+        grid-template-columns: 1fr;
+    }
+
+
+
+    .card-body {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-footer {
+        flex-direction: column;
+    }
+
+
+}
+
+/* Theme classes for body */
+.theme-red {
+    --primary: #cc0000;
+    --primary-dark: #990000;
+    --accent: #ff4d4d;
+}
+
+.theme-orange {
+    --primary: #ff6600;
+    --primary-dark: #cc5200;
+    --accent: #ff9966;
+}
+
+.theme-blue {
+    --primary: #0066cc;
+    --primary-dark: #0052a3;
+    --accent: #4895ef;
+}
+
+.theme-purple {
+    --primary: #7c4dff;
+    --primary-dark: #5e35b1;
+    --accent: #b388ff;
+}

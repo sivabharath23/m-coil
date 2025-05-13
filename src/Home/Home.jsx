@@ -8,6 +8,7 @@ import './../assets/style.css';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../Sidebar/Sidebar';
+import { Link } from 'react-router-dom';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 console.log('API URL:', apiUrl);
@@ -61,7 +62,7 @@ const Home = () => {
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
             {/* Back Button (Top Left) */}
-            <button className="btn back-btn" id="backBtn" onClick={handleBackClick}>
+            <button className=" back-btn" id="backBtn" onClick={handleBackClick}>
                 <FaArrowLeft />
             </button>
 
@@ -74,12 +75,12 @@ const Home = () => {
                 {/* Cards Section */}
                 <div className="index-row">
                     {/* Category 1 - Air Cooler Blast */}
-                    <a href="air-cooler.html" className="card-custom">
+                    <Link to="/aircooler" className="card-custom">
                         <div className="card-body menu">
                             <FaWind className="mb-3" />
                             <h5 className="card-title" data-translate-key="airCoolerBlast">Air Cooler Blast</h5>
                         </div>
-                    </a>
+                    </Link>
 
                     {/* Category 2 - Room Controller */}
                     <div className="card-custom">
@@ -132,19 +133,20 @@ const Home = () => {
             </div>
 
             {/* Bottom Navigation Bar */}
+            {/* Bottom Navigation */}
             <div className="bottom-nav">
                 <button className="btn" id="menuBtn" onClick={toggleSidebar}>
                     <FaTh />
                     <span className="btn-label">Menu</span>
                 </button>
-                <button className="btn active" id="homeBtn">
+                <Link className="btn active" id="homeBtn" to="/home">
                     <FaHome />
                     <span className="btn-label">Home</span>
-                </button>
-                <button className="btn" id="profileBtn">
+                </Link>
+                <Link className="btn " id="profileBtn" to="/profile">
                     <FaUser />
                     <span className="btn-label">Profile</span>
-                </button>
+                </Link>
             </div>
         </div>
     );

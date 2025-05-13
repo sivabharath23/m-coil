@@ -166,7 +166,7 @@ export default function Login() {
             <div className="welcome-text-section">
               <div className="welcome-text-container">
                 <img src={logo} alt="M-Coil Logo" className="welcome-logo" />
-                <h1 className="welcome-title">WelcomE to</h1>
+                <h1 className="welcome-title">Welcome to</h1>
                 <h2 className="welcome-subtitle">M-Coil</h2>
                 <p className="welcome-description">
                   The intelligent coolant recommendation system for industrial and commercial spaces.

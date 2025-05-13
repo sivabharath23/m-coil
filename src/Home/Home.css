@@ -32,57 +32,6 @@ p {
     margin: 0 auto;
 }
 
-/* App Header */
-.app-header {
-    text-align: center;
-    padding: 5rem 0 3rem;
-    position: relative;
-}
-
-.app-header p {
-    font-size: 1.25rem;
-    color: var(--dark);
-    max-width: 600px;
-    margin: 0 auto;
-    position: relative;
-    padding: 0 1rem;
-}
-
-.app-header p::after {
-    content: '';
-    display: block;
-    width: 80px;
-    height: 4px;
-    background: var(--gradient-primary);
-    margin: 1.5rem auto 0;
-    border-radius: 2px;
-    opacity: 0.8;
-}
-
-/* Back Button */
-.back-btn {
-    position: fixed;
-    top: 1.5rem;
-    left: 1.5rem;
-    width: 3rem;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--white);
-    border: none;
-    border-radius: var(--radius-circle);
-    box-shadow: var(--shadow-md);
-    z-index: 100;
-    transition: var(--transition);
-    color: var(--dark);
-}
-
-.back-btn:hover {
-    background: var(--gradient-primary);
-    color: var(--white);
-    transform: translateX(-3px) scale(1.05);
-}
 
 /* Cards Grid */
 .index-row {
@@ -183,75 +132,7 @@ p {
     width: 40px;
 }
 
-/* Bottom Navigation */
-.bottom-nav {
-    background-color: var(--white);
-    border-top-left-radius: var(--radius-xl);
-    border-top-right-radius: var(--radius-xl);
-    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
-    padding: 0.75rem 0;
-    z-index: 90;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 70px;
-}
 
-.bottom-nav .btn {
-    border-radius: var(--radius-circle);
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-    color: var(--gray);
-    border: none;
-    position: relative;
-    transition: var(--transition-fast);
-    flex-direction: column;
-}
-
-.bottom-nav .btn.active {
-    color: var(--primary);
-    transform: translateY(-5px);
-}
-
-.bottom-nav .btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    background-color: var(--primary);
-    border-radius: var(--radius-circle);
-}
-
-.bottom-nav .btn:hover:not(.active) {
-    color: var(--accent);
-    background-color: var(--primary-light);
-}
-
-.bottom-nav .btn-label {
-    font-size: 0.65rem;
-    margin-top: 0.25rem;
-    font-weight: 500;
-    opacity: 0;
-    transition: var(--transition-fast);
-    position: absolute;
-    bottom: -1rem;
-}
-
-.bottom-nav .btn.active .btn-label {
-    opacity: 1;
-    bottom: -1.5rem;
-}
 
 /* Animations */
 @keyframes fadeIn {
@@ -326,71 +207,5 @@ p {
     to {
         transform: scale(4);
         opacity: 0;
-    }
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    html {
-        font-size: 15px;
-    }
-
-    .app-header {
-        padding: 4rem 0 2rem;
-    }
-
-    .app-header p {
-        font-size: 1.1rem;
-    }
-
-    .index-row {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 1rem;
-    }
-
-    .card-body.menu {
-        padding: 1rem 0.5rem;
-    }
-
-    .card-body.menu i,
-    .card-body.menu svg {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
-
-    .bottom-nav {
-        height: 65px;
-    }
-
-    .bottom-nav .btn {
-        width: 44px;
-        height: 44px;
-    }
-}
-
-@media (max-width: 576px) {
-    html {
-        font-size: 14px;
-    }
-
-    .back-btn {
-        width: 2.5rem;
-        height: 2.5rem;
-        top: 1rem;
-        left: 1rem;
-    }
-
-    .index-row {
-        grid-template-columns: repeat(2, 1fr);
-        padding-bottom: 5rem;
-    }
-
-    .bottom-nav {
-        height: 60px;
-    }
-
-    .bottom-nav .btn {
-        width: 40px;
-        height: 40px;
     }
 }

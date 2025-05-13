@@ -1,20 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-
-
 import {
-
     FaArrowLeft,
     FaTh,
     FaHome,
-    FaUser
+    FaUser,
+    FaSearch,
+    FaCalculator,
+    FaSnowflake,
+    FaFan,
+    FaTemperatureLow,
+    FaTemperatureHigh,
+    FaTint,
+    FaMountain
 } from 'react-icons/fa';
+import { IoMdOptions } from 'react-icons/io';
 import Sidebar from '../Sidebar/Sidebar';
 import './../assets/style.css';
 import './Aircooler.css';
 
 const AirCooler = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [activeTab, setActiveTab] = useState('search'); // 'search' or 'calculate'
+    const navigate = useNavigate();
 
     const [capacity, setCapacity] = useState(5);
     const [withCorrosionProtection, setWithCorrosionProtection] = useState(false);
@@ -27,183 +35,197 @@ const AirCooler = () => {
     const [humidity, setHumidity] = useState(85);
     const [elevation, setElevation] = useState(0);
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+    const handleBackClick = () => navigate(-1);
 
-
-    const handleBackClick = () => {
-        navigate(-1);
-    };
-
+    const fluidOptions = [
+        { value: 'R513A', label: 'R513A', icon: <FaSnowflake /> },
+        { value: 'R744', label: 'R744', icon: <FaSnowflake /> },
+        { value: 'A2L', label: 'A2L/A3', icon: <FaSnowflake /> }
+    ];
 
     return (
-
         <div className="app-container">
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
-            <button className="back-btn" id="backBtn" onClick={handleBackClick}>
-                <FaArrowLeft />
-            </button>
+            <div className="app-header sticky-header">
+                <button className="icon-btn" onClick={handleBackClick}>
+                    <FaArrowLeft />
+                </button>
+                <h2 className='title'>Air Cooler</h2>
+                <button className="icon-btn" onClick={toggleSidebar}>
+                    <IoMdOptions />
+                </button>
+            </div>
 
             <div className={`container ${isSidebarOpen ? 'sidebar-open' : ''}`}>
-                <div className="app-header mb-5">
-                    <h2 className="mb-4">Air Cooler</h2>
-                    <p>Set air cooler fluid, temperature, and air settings.</p>
+                {/* Mode Selection Tabs */}
+                <div className="mode-tabs">
+                    <button
+                        className={`tab-btn ${activeTab === 'search' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('search')}
+                    >
+                        <FaSearch className="tab-icon" />
+                        <span>Search Coolers</span>
+                    </button>
+                    <button
+                        className={`tab-btn ${activeTab === 'calculate' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('calculate')}
+                    >
+                        <FaCalculator className="tab-icon" />
+                        <span>Calculate</span>
+                    </button>
                 </div>
 
                 {/* Air Cooler Section */}
-                <div className="card p-4 mb-4">
-                    <div className='card-body'>
-                        <h4>Air cooler</h4>
-                        <div className="form-check">
-                            <input type="radio" className="form-check-input" name="coolerOption" checked readOnly />
-                            <label className="form-check-label">Search air coolers</label>
-                        </div>
-                        <div className="form-check mb-2">
-                            <input type="radio" className="form-check-input" name="coolerOption" />
-                            <label className="form-check-label">Calculate specific air cooler</label>
-                        </div>
+                <div className="card-section">
+                    <h3 className="section-title">
+                        <FaFan className="section-icon" />
+                        <span>Air Cooler Settings</span>
+                    </h3>
 
-                        <div className="form-group">
+                    <div className="input-group">
+                        <label>Capacity (kW)</label>
+                        <div className="input-with-icon">
                             <input
                                 type="number"
-                                className="form-control"
-                                placeholder=" "
                                 value={capacity}
                                 onChange={(e) => setCapacity(+e.target.value)}
                             />
-                            <label className="form-label">Capacity (kW)</label>
                         </div>
+                    </div>
 
-                        <div className="form-check">
-                            <input
-                                type="checkbox"
-                                className="form-check-input"
-                                checked={withCorrosionProtection}
-                                onChange={(e) => setWithCorrosionProtection(e.target.checked)}
-                            />
-                            <label className="form-check-label">With corrosion protection</label>
-                        </div>
+                    <div className="checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="corrosionProtection"
+                            checked={withCorrosionProtection}
+                            onChange={(e) => setWithCorrosionProtection(e.target.checked)}
+                        />
+                        <label htmlFor="corrosionProtection">
+                            With corrosion protection
+                        </label>
                     </div>
                 </div>
 
                 {/* Fluid Section */}
-                <div className="card p-4 mb-4">
-                    <div className='card-body'>
-                        <h4>Fluid</h4>
+                <div className="card-section">
+                    <h3 className="section-title">
+                        <FaSnowflake className="section-icon" />
+                        <span>Fluid Settings</span>
+                    </h3>
 
-                        <div className="form-group">
-                            <select
-                                className="form-control"
-                                placeholder=" "
-                                value={fluidType}
-                                onChange={(e) => setFluidType(e.target.value)}
-                            >
-                                <option value="R513A">A1 (HFC) - R513A</option>
-                                <option value="R744">CO₂ (R744)</option>
-                                <option value="A2L">A2L/A3</option>
-                            </select>
-                            <label className="form-label">Fluid Type</label>
+                    <div className="input-group">
+                        <label>Fluid Type</label>
+                        <div className="icon-selector">
+                            {fluidOptions.map(option => (
+                                <button
+                                    key={option.value}
+                                    className={`icon-option ${fluidType === option.value ? 'active' : ''}`}
+                                    onClick={() => setFluidType(option.value)}
+                                >
+                                    {option.icon}
+                                    <span>{option.label}</span>
+                                </button>
+                            ))}
                         </div>
+                    </div>
 
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-group">
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        placeholder=" "
-                                        value={evapTemp}
-                                        onChange={(e) => setEvapTemp(+e.target.value)}
-                                    />
-                                    <label className="form-label">Evaporation Temp (°C)</label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-group">
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        placeholder=" "
-                                        value={condTemp}
-                                        onChange={(e) => setCondTemp(+e.target.value)}
-                                    />
-                                    <label className="form-label">Condensation Temp (°C)</label>
-                                </div>
-                            </div>
+                    <div className="dual-input-group">
+                        <div className="input-group">
+                            <label>
+                                <FaTemperatureLow className="input-icon" />
+                                Evaporation (°C)
+                            </label>
+                            <input
+                                type="number"
+                                value={evapTemp}
+                                onChange={(e) => setEvapTemp(+e.target.value)}
+                            />
                         </div>
+                        <div className="input-group">
+                            <label>
+                                <FaTemperatureHigh className="input-icon" />
+                                Condensation (°C)
+                            </label>
+                            <input
+                                type="number"
+                                value={condTemp}
+                                onChange={(e) => setCondTemp(+e.target.value)}
+                            />
+                        </div>
+                    </div>
 
-                        <div className="row mt-3">
-                            <div className="col">
-                                <div className="form-group">
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        placeholder=" "
-                                        value={superheating}
-                                        onChange={(e) => setSuperheating(+e.target.value)}
-                                    />
-                                    <label className="form-label">Superheating (K)</label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-group">
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        placeholder=" "
-                                        value={subcooling}
-                                        onChange={(e) => setSubcooling(+e.target.value)}
-                                    />
-                                    <label className="form-label">Subcooling (K)</label>
-                                </div>
-                            </div>
+                    <div className="dual-input-group">
+                        <div className="input-group">
+                            <label>Superheating (K)</label>
+                            <input
+                                type="number"
+                                value={superheating}
+                                onChange={(e) => setSuperheating(+e.target.value)}
+                            />
+                        </div>
+                        <div className="input-group">
+                            <label>Subcooling (K)</label>
+                            <input
+                                type="number"
+                                value={subcooling}
+                                onChange={(e) => setSubcooling(+e.target.value)}
+                            />
                         </div>
                     </div>
                 </div>
 
                 {/* Air Section */}
-                <div className="card p-4 mb-4">
-                    <div className='card-body'>
-                        <h4>Air</h4>
-                        <div className="row">
-                            <div className="col">
-                                <div className="form-group">
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        placeholder=" "
-                                        value={inletTemp}
-                                        onChange={(e) => setInletTemp(+e.target.value)}
-                                    />
-                                    <label className="form-label">Inlet Temperature (°C)</label>
-                                </div>
-                            </div>
-                            <div className="col">
-                                <div className="form-group">
-                                    <input
-                                        type="number"
-                                        className="form-control"
-                                        placeholder=" "
-                                        value={humidity}
-                                        onChange={(e) => setHumidity(+e.target.value)}
-                                    />
-                                    <label className="form-label">Humidity at Inlet (%)</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="form-group mt-3">
+                <div className="card-section">
+                    <h3 className="section-title">
+                        <FaFan className="section-icon" />
+                        <span>Air Settings</span>
+                    </h3>
+
+                    <div className="dual-input-group">
+                        <div className="input-group">
+                            <label>
+                                <FaTemperatureLow className="input-icon" />
+                                Inlet Temp (°C)
+                            </label>
                             <input
                                 type="number"
-                                className="form-control"
-                                placeholder=" "
-                                value={elevation}
-                                onChange={(e) => setElevation(+e.target.value)}
+                                value={inletTemp}
+                                onChange={(e) => setInletTemp(+e.target.value)}
                             />
-                            <label className="form-label">Elevation (m)</label>
+                        </div>
+                        <div className="input-group">
+                            <label>
+                                <FaTint className="input-icon" />
+                                Humidity (%)
+                            </label>
+                            <input
+                                type="number"
+                                value={humidity}
+                                onChange={(e) => setHumidity(+e.target.value)}
+                            />
                         </div>
                     </div>
+
+                    <div className="input-group">
+                        <label>
+                            <FaMountain className="input-icon" />
+                            Elevation (m)
+                        </label>
+                        <input
+                            type="number"
+                            value={elevation}
+                            onChange={(e) => setElevation(+e.target.value)}
+                        />
+                    </div>
+                </div>
+
+                {/* Action Button */}
+                <div className="action-footer">
+                    <button className="primary-btn">
+                        {activeTab === 'search' ? 'Search Coolers' : 'Calculate'}
+                    </button>
                 </div>
 
                 {/* Bottom Navigation */}
@@ -216,14 +238,13 @@ const AirCooler = () => {
                         <FaHome />
                         <span className="btn-label">Home</span>
                     </Link>
-                    <Link className="btn" id="profileBtn" to="/profile">
+                    <Link className="btn active" id="profileBtn" to="/profile">
                         <FaUser />
                         <span className="btn-label">Profile</span>
                     </Link>
                 </div>
             </div>
         </div>
-
     );
 };
 

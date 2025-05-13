@@ -1,4 +1,4 @@
-/* :root {
+:root {
     --primary: #0066cc;
     --primary-dark: #0052a3;
     --primary-light: rgba(67, 97, 238, 0.1);
@@ -42,4 +42,4 @@
 html {
     scroll-behavior: smooth;
     font-size: 16px;
-} */
+}

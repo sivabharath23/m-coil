@@ -172,7 +172,7 @@ hr {
     }
 
     .app-header {
-        padding: 3rem 0 1rem;
+        padding: 2rem 0 2rem;
     }
 
     .app-header p {
@@ -243,11 +243,9 @@ hr {
 /* App Header */
 .app-header {
     text-align: center;
-    padding: 4rem 0 1rem;
+    padding: 2rem 0 2rem;
     position: relative;
 }
-
-
 
 .app-header p::after {
     content: '';

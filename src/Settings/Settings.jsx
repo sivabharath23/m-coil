@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-
-
 import {
     FaTimes,
     FaCheckCircle,
     FaTimesCircle,
-    FaSyncAlt,
     FaArrowLeft,
     FaTh,
     FaHome,
-    FaUser
+    FaUser,
+    FaGlobe,
+    FaMoneyBillWave,
+    FaRuler,
+    FaLanguage,
+    FaEuroSign,
+    FaPoundSign,
+    FaRupeeSign,
+    FaDollarSign,
+    FaWeight,
+    FaBalanceScale
 } from 'react-icons/fa';
 import Sidebar from '../Sidebar/Sidebar';
 import './../assets/style.css';
@@ -18,11 +25,11 @@ import './Settings.css';
 
 const Settings = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
     const navigate = useNavigate();
-    const [currentTheme, setCurrentTheme] = useState('blue'); // Default theme
+
     const [currentLanguage, setCurrentLanguage] = useState('en');
     const [currentCurrency, setCurrentCurrency] = useState('USD');
+    const [currentUOM, setCurrentUOM] = useState('kg');
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     const [pendingChange, setPendingChange] = useState({
         type: '',
@@ -31,25 +38,16 @@ const Settings = () => {
 
     // Load saved settings from localStorage on component mount
     useEffect(() => {
-        const savedTheme = localStorage.getItem('theme') || 'blue';
         const savedLanguage = localStorage.getItem('language') || 'en';
         const savedCurrency = localStorage.getItem('currency') || 'USD';
+        const savedUOM = localStorage.getItem('uom') || 'kg';
 
-        setCurrentTheme(savedTheme);
         setCurrentLanguage(savedLanguage);
         setCurrentCurrency(savedCurrency);
+        setCurrentUOM(savedUOM);
     }, []);
 
-    const handleThemeChange = (theme) => {
-        setPendingChange({
-            type: 'theme',
-            value: theme
-        });
-        setShowConfirmationModal(true);
-    };
-
-    const handleLanguageChange = (e) => {
-        const lang = e.target.value;
+    const handleLanguageChange = (lang) => {
         setPendingChange({
             type: 'language',
             value: lang
@@ -57,8 +55,7 @@ const Settings = () => {
         setShowConfirmationModal(true);
     };
 
-    const handleCurrencyChange = (e) => {
-        const currency = e.target.value;
+    const handleCurrencyChange = (currency) => {
         setPendingChange({
             type: 'currency',
             value: currency
@@ -66,29 +63,27 @@ const Settings = () => {
         setShowConfirmationModal(true);
     };
 
-    const resetThemeToDefault = () => {
+    const handleUOMChange = (uom) => {
         setPendingChange({
-            type: 'theme',
-            value: 'blue' // Your default theme
+            type: 'uom',
+            value: uom
         });
         setShowConfirmationModal(true);
     };
 
     const confirmChange = () => {
         switch (pendingChange.type) {
-            case 'theme':
-                setCurrentTheme(pendingChange.value);
-                localStorage.setItem('theme', pendingChange.value);
-                applyTheme(pendingChange.value);
-                break;
             case 'language':
                 setCurrentLanguage(pendingChange.value);
                 localStorage.setItem('language', pendingChange.value);
-                // Here you would typically implement your language change logic
                 break;
             case 'currency':
                 setCurrentCurrency(pendingChange.value);
                 localStorage.setItem('currency', pendingChange.value);
+                break;
+            case 'uom':
+                setCurrentUOM(pendingChange.value);
+                localStorage.setItem('uom', pendingChange.value);
                 break;
             default:
                 break;
@@ -100,23 +95,12 @@ const Settings = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
-
     const handleBackClick = () => {
         navigate(-1);
     };
 
-
-    const applyTheme = (theme) => {
-        // Remove all theme classes
-        document.body.classList.remove('theme-red', 'theme-orange', 'theme-blue', 'theme-purple');
-
-        document.body.classList.add(`theme-${theme}`);
-    };
-
     const getSettingName = () => {
         switch (pendingChange.type) {
-            case 'theme':
-                return `${pendingChange.value} Theme`;
             case 'language':
                 return pendingChange.value === 'en' ? 'English' :
                     pendingChange.value === 'es' ? 'Español' :
@@ -125,8 +109,32 @@ const Settings = () => {
                 return pendingChange.value === 'USD' ? 'USD ($)' :
                     pendingChange.value === 'EUR' ? 'EUR (€)' :
                         pendingChange.value === 'GBP' ? 'GBP (£)' : 'INR (₹)';
+            case 'uom':
+                return pendingChange.value === 'kg' ? 'Kilogram (kg)' :
+                    pendingChange.value === 'lb' ? 'Pound (lb)' :
+                        pendingChange.value === 'g' ? 'Gram (g)' : 'Meter (m)';
             default:
                 return '';
+        }
+    };
+
+    const getCurrencyIcon = (currency) => {
+        switch (currency) {
+            case 'USD': return <FaDollarSign />;
+            case 'EUR': return <FaEuroSign />;
+            case 'GBP': return <FaPoundSign />;
+            case 'INR': return <FaRupeeSign />;
+            default: return <FaMoneyBillWave />;
+        }
+    };
+
+    const getUOMIcon = (uom) => {
+        switch (uom) {
+            case 'kg': return <FaWeight />;
+            case 'lb': return <FaBalanceScale />;
+            case 'g': return <FaWeight />;
+            case 'm': return <FaRuler />;
+            default: return <FaRuler />;
         }
     };
 
@@ -142,115 +150,152 @@ const Settings = () => {
             <div className={`container`}>
                 <div className="app-header mb-5">
                     <h2>Settings</h2>
-                    <p>Select your preferred theme, language, and currency.</p>
-                </div>
-
-
-
-                {/* Theme Selection Form */}
-                <div className="card shadow-lg rounded border-0">
-                    <div className="card-body text-center">
-                        <h4>Select a Theme</h4>
-
-                        <hr />
-                        <div className="theme-selector">
-                            {/* Red Theme */}
-                            <label className={`theme-option ${currentTheme === 'red' ? 'active' : ''}`}>
-                                <input
-                                    type="radio"
-                                    name="themeColor"
-                                    value="red"
-                                    checked={currentTheme === 'red'}
-                                    onChange={() => handleThemeChange('red')}
-                                />
-                                <span className="theme-label">Red Theme</span>
-                            </label>
-
-                            {/* Orange Theme */}
-                            <label className={`theme-option ${currentTheme === 'orange' ? 'active' : ''}`}>
-                                <input
-                                    type="radio"
-                                    name="themeColor"
-                                    value="orange"
-                                    checked={currentTheme === 'orange'}
-                                    onChange={() => handleThemeChange('orange')}
-                                />
-                                <span className="theme-label">Orange Theme</span>
-                            </label>
-
-                            {/* Blue Theme */}
-                            <label className={`theme-option ${currentTheme === 'blue' ? 'active' : ''}`}>
-                                <input
-                                    type="radio"
-                                    name="themeColor"
-                                    value="blue"
-                                    checked={currentTheme === 'blue'}
-                                    onChange={() => handleThemeChange('blue')}
-                                />
-                                <span className="theme-label">Blue Theme</span>
-                            </label>
-
-                            {/* Purple Theme */}
-                            <label className={`theme-option ${currentTheme === 'purple' ? 'active' : ''}`}>
-                                <input
-                                    type="radio"
-                                    name="themeColor"
-                                    value="purple"
-                                    checked={currentTheme === 'purple'}
-                                    onChange={() => handleThemeChange('purple')}
-                                />
-                                <span className="theme-label">Purple Theme</span>
-                            </label>
-                        </div>
-
-                        <hr />
-
-                        <div className="mt-4">
-                            <button className="btn btn-primary" onClick={resetThemeToDefault}>
-                                <FaSyncAlt /> Reset to Default
-                            </button>
-                        </div>
-                    </div>
+                    <p>Customize your app preferences</p>
                 </div>
 
                 {/* Language Selection */}
-                <div className="card shadow-lg rounded border-0 mt-4">
-                    <div className="card-body text-center">
-                        <h4>Select a Language</h4>
+                <div className="card shadow-lg rounded border-0">
+                    <div className="card-body">
+                        <h4 className="text-center section-title"><FaLanguage /> Language</h4>
                         <hr />
-                        <div className="language-selector mt-4">
-                            <select
-                                id="languageSelect"
-                                className="form-select"
-                                value={currentLanguage}
-                                onChange={handleLanguageChange}
+                        <div className="option-grid">
+                            <div
+                                className={`option-card ${currentLanguage === 'en' ? 'active' : ''}`}
+                                onClick={() => handleLanguageChange('en')}
                             >
-                                <option value="en">English</option>
-                                <option value="es">Español</option>
-                                <option value="fr">Français</option>
-                                <option value="de">Deutsch</option>
-                            </select>
+                                <div className="option-icon"><FaGlobe /></div>
+                                <div className="option-label">English</div>
+                                {currentLanguage === 'en' && <div className="option-check">✓</div>}
+                            </div>
+
+                            <div
+                                className={`option-card ${currentLanguage === 'es' ? 'active' : ''}`}
+                                onClick={() => handleLanguageChange('es')}
+                            >
+                                <div className="option-icon"><FaGlobe /></div>
+                                <div className="option-label">Español</div>
+                                {currentLanguage === 'es' && <div className="option-check">✓</div>}
+                            </div>
+
+                            <div
+                                className={`option-card ${currentLanguage === 'fr' ? 'active' : ''}`}
+                                onClick={() => handleLanguageChange('fr')}
+                            >
+                                <div className="option-icon"><FaGlobe /></div>
+                                <div className="option-label">Français</div>
+                                {currentLanguage === 'fr' && <div className="option-check">✓</div>}
+                            </div>
+
+                            <div
+                                className={`option-card ${currentLanguage === 'de' ? 'active' : ''}`}
+                                onClick={() => handleLanguageChange('de')}
+                            >
+                                <div className="option-icon"><FaGlobe /></div>
+                                <div className="option-label">Deutsch</div>
+                                {currentLanguage === 'de' && <div className="option-check">✓</div>}
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Currency Selection */}
                 <div className="card shadow-lg rounded border-0 mt-4">
-                    <div className="card-body text-center">
-                        <h4>Select a Currency</h4>
+                    <div className="card-body">
+                        <h4 className="text-center section-title"><FaMoneyBillWave /> Currency</h4>
                         <hr />
-                        <div className="currency-selector mt-4">
-                            <select
-                                id="currencySelect"
-                                className="form-select"
-                                value={currentCurrency}
-                                onChange={handleCurrencyChange}
+                        <div className="option-grid">
+                            <div
+                                className={`option-card ${currentCurrency === 'USD' ? 'active' : ''}`}
+                                onClick={() => handleCurrencyChange('USD')}
                             >
-                                <option value="USD">$ USD</option>
-                                <option value="EUR">€ EUR</option>
-                                <option value="GBP">£ GBP</option>
-                                <option value="INR">₹ INR</option>
-                            </select>
+                                <div className="option-icon">{getCurrencyIcon('USD')}</div>
+                                <div className="option-label">USD ($)</div>
+                                {currentCurrency === 'USD' && <div className="option-check">✓</div>}
+                            </div>
+
+                            <div
+                                className={`option-card ${currentCurrency === 'EUR' ? 'active' : ''}`}
+                                onClick={() => handleCurrencyChange('EUR')}
+                            >
+                                <div className="option-icon">{getCurrencyIcon('EUR')}</div>
+                                <div className="option-label">EUR (€)</div>
+                                {currentCurrency === 'EUR' && <div className="option-check">✓</div>}
+                            </div>
+
+                            <div
+                                className={`option-card ${currentCurrency === 'GBP' ? 'active' : ''}`}
+                                onClick={() => handleCurrencyChange('GBP')}
+                            >
+                                <div className="option-icon">{getCurrencyIcon('GBP')}</div>
+                                <div className="option-label">GBP (£)</div>
+                                {currentCurrency === 'GBP' && <div className="option-check">✓</div>}
+                            </div>
+
+                            <div
+                                className={`option-card ${currentCurrency === 'INR' ? 'active' : ''}`}
+                                onClick={() => handleCurrencyChange('INR')}
+                            >
+                                <div className="option-icon">{getCurrencyIcon('INR')}</div>
+                                <div className="option-label">INR (₹)</div>
+                                {currentCurrency === 'INR' && <div className="option-check">✓</div>}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Unit of Measurement Selection */}
+                <div className="card shadow-lg rounded border-0 mt-4">
+                    <div className="card-body">
+                        <h4 className="text-center section-title"><FaRuler /> Unit of Measurement</h4>
+                        <hr />
+                        <div className="option-grid">
+                            <div
+                                className={`option-card ${currentUOM === 'kg' ? 'active' : ''}`}
+                                onClick={() => handleUOMChange('kg')}
+                            >
+                                <div className="option-icon">{getUOMIcon('kg')}</div>
+                                <div>
+                                    <div className="option-label">Kilogram</div>
+                                    <div className="option-subtext">(kg)</div>
+                                </div>
+                                {currentUOM === 'kg' && <div className="option-check">✓</div>}
+                            </div>
+
+                            <div
+                                className={`option-card ${currentUOM === 'lb' ? 'active' : ''}`}
+                                onClick={() => handleUOMChange('lb')}
+                            >
+                                <div className="option-icon">{getUOMIcon('lb')}</div>
+                                <div>
+                                    <div className="option-label">Pound</div>
+                                    <div className="option-subtext">(lb)</div>
+                                </div>
+                                {currentUOM === 'lb' && <div className="option-check">✓</div>}
+                            </div>
+
+                            <div
+                                className={`option-card ${currentUOM === 'g' ? 'active' : ''}`}
+                                onClick={() => handleUOMChange('g')}
+                            >
+                                <div className="option-icon">{getUOMIcon('g')}</div>
+                                <div>
+                                    <div className="option-label">Gram</div>
+                                    <div className="option-subtext">(g)</div>
+                                </div>
+                                {currentUOM === 'g' && <div className="option-check">✓</div>}
+                            </div>
+
+                            <div
+                                className={`option-card ${currentUOM === 'm' ? 'active' : ''}`}
+                                onClick={() => handleUOMChange('m')}
+                            >
+                                <div className="option-icon">{getUOMIcon('m')}</div>
+                                <div>
+                                    <div className="option-label">Meter</div>
+                                    <div className="option-subtext">(m)</div>
+                                </div>
+                                {currentUOM === 'm' && <div className="option-check">✓</div>}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -269,7 +314,6 @@ const Settings = () => {
                         <span className="btn-label">Profile</span>
                     </Link>
                 </div>
-
 
                 {/* Confirmation Modal */}
                 {showConfirmationModal && (
@@ -312,7 +356,6 @@ const Settings = () => {
                         </div>
                     </div>
                 )}
-
             </div>
         </div>
     );

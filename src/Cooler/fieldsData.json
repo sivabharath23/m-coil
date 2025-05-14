@@ -1,0 +1,276 @@
+{
+    "Condenser Coils": [
+        {
+            "name": "capacity",
+            "type": "number",
+            "section": "Air Cooler Settings",
+            "default": 5
+        },
+        {
+            "name": "withCorrosionProtection",
+            "type": "checkbox",
+            "section": "Air Cooler Settings",
+            "default": false
+        },
+        {
+            "name": "fluidType",
+            "type": "select",
+            "section": "Fluid Settings",
+            "options": [
+                {
+                    "value": "R513A",
+                    "label": "R513A"
+                },
+                {
+                    "value": "R744",
+                    "label": "R744"
+                },
+                {
+                    "value": "A2L",
+                    "label": "A2L/A3"
+                },
+                {
+                    "value": "A2L11",
+                    "label": "A2L/A31"
+                }
+            ],
+            "default": "R513A"
+        },
+        {
+            "name": "evapTemp",
+            "type": "number",
+            "section": "Fluid Settings",
+            "default": -8
+        },
+        {
+            "name": "condTemp",
+            "type": "number",
+            "section": "Fluid Settings",
+            "default": 32
+        },
+        {
+            "name": "superheating",
+            "type": "number",
+            "section": "Fluid Settings",
+            "default": 5.2
+        },
+        {
+            "name": "subcooling",
+            "type": "number",
+            "section": "Fluid Settings",
+            "default": 2
+        },
+        {
+            "name": "inletTemp",
+            "type": "number",
+            "section": "Air Settings",
+            "default": 0
+        },
+        {
+            "name": "humidity",
+            "type": "number",
+            "section": "Air Settings",
+            "default": 85
+        },
+        {
+            "name": "elevation",
+            "type": "number",
+            "section": "Air Settings",
+            "default": 0
+        }
+    ],
+    "Dry Coolers": [
+        {
+            "name": "capacity",
+            "type": "number",
+            "section": "Air Cooler Settings",
+            "default": 5
+        },
+        {
+            "name": "fluidType",
+            "type": "select",
+            "section": "Fluid Settings",
+            "options": [
+                {
+                    "value": "R513A",
+                    "label": "R513A"
+                },
+                {
+                    "value": "R744",
+                    "label": "R744"
+                },
+                {
+                    "value": "A2L",
+                    "label": "A2L/A3"
+                }
+            ],
+            "default": "R513A"
+        },
+        {
+            "name": "inletTemp",
+            "type": "number",
+            "section": "Air Settings",
+            "default": 0
+        },
+        {
+            "name": "humidity",
+            "type": "number",
+            "section": "Air Settings",
+            "default": 85
+        },
+        {
+            "name": "elevation",
+            "type": "number",
+            "section": "Air Settings",
+            "default": 0
+        }
+    ],
+    "Evaporator Coils": [
+        {
+            "name": "capacity",
+            "type": "number",
+            "section": "Air Cooler Settings",
+            "default": 5
+        },
+        {
+            "name": "fluidType",
+            "type": "select",
+            "section": "Fluid Settings",
+            "options": [
+                {
+                    "value": "R513A",
+                    "label": "R513A"
+                },
+                {
+                    "value": "R744",
+                    "label": "R744"
+                },
+                {
+                    "value": "A2L",
+                    "label": "A2L/A3"
+                }
+            ],
+            "default": "R513A"
+        },
+        {
+            "name": "evapTemp",
+            "type": "number",
+            "section": "Fluid Settings",
+            "default": -8
+        },
+        {
+            "name": "superheating",
+            "type": "number",
+            "section": "Fluid Settings",
+            "default": 5.2
+        }
+    ],
+    "Heat Exchanger": [
+        {
+            "name": "capacity",
+            "type": "number",
+            "section": "Air Cooler Settings",
+            "default": 5
+        },
+        {
+            "name": "fluidType",
+            "type": "select",
+            "section": "Fluid Settings",
+            "options": [
+                {
+                    "value": "R513A",
+                    "label": "R513A"
+                },
+                {
+                    "value": "R744",
+                    "label": "R744"
+                },
+                {
+                    "value": "A2L",
+                    "label": "A2L/A3"
+                }
+            ],
+            "default": "R513A"
+        },
+        {
+            "name": "inletTemp",
+            "type": "number",
+            "section": "Fluid Settings",
+            "default": 0
+        },
+        {
+            "name": "subcooling",
+            "type": "number",
+            "section": "Fluid Settings",
+            "default": 2
+        }
+    ],
+    "Telecom Units": [
+        {
+            "name": "capacity",
+            "type": "number",
+            "section": "Air Cooler Settings",
+            "default": 5
+        },
+        {
+            "name": "withCorrosionProtection",
+            "type": "checkbox",
+            "section": "Air Cooler Settings",
+            "default": false
+        },
+        {
+            "name": "elevation",
+            "type": "number",
+            "section": "Air Settings",
+            "default": 0
+        }
+    ],
+    "Bulk Milk Cooling Systems": [
+        {
+            "name": "capacity",
+            "type": "number",
+            "section": "Cooling Settings",
+            "default": 5
+        },
+        {
+            "name": "fluidType",
+            "type": "select",
+            "section": "Cooling Settings",
+            "options": [
+                {
+                    "value": "R513A",
+                    "label": "R513A"
+                },
+                {
+                    "value": "R744",
+                    "label": "R744"
+                },
+                {
+                    "value": "A2L",
+                    "label": "A2L/A3"
+                }
+            ],
+            "default": "R513A"
+        },
+        {
+            "name": "evapTemp",
+            "type": "number",
+            "section": "Cooling Settings",
+            "default": -8
+        },
+        {
+            "name": "condTemp",
+            "type": "number",
+            "section": "Cooling Settings",
+            "default": 32
+        }
+    ],
+    "Air Cooler": [
+        {
+            "name": "capacity",
+            "type": "number",
+            "section": "Air Cooler Settings",
+            "default": 5
+        }
+    ]
+}

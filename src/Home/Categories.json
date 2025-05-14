@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Condenser Coils",
+        "backgroundImage": "/assets/images/condesor-coil.webp"
+    },
+    {
+        "name": "Heat Exchanger",
+        "backgroundImage": "/assets/images/heatExchange.webp"
+    },
+    {
+        "name": "Evaporator Coils",
+        "backgroundImage": "/assets/images/Evaporator-coil.webp"
+    },
+    {
+        "name": "Dry Coolers",
+        "backgroundImage": "/assets/images/prod-2.webp"
+    },
+    {
+        "name": "Telecom Units",
+        "backgroundImage": "/assets/images/telecomunit.webp"
+    },
+    {
+        "name": "Bulk Milk Cooling Systems",
+        "backgroundImage": "/assets/images/BulkMIlk.webp"
+    }
+]

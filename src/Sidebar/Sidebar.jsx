@@ -54,7 +54,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                         <FaHome className="sidebar-icon" /> Home
                     </Link>
                 </li>
-                <li>
+                {/* <li>
                     <Link to="/air-cooler" onClick={toggleSidebar}>
                         <FaFan className="sidebar-icon" /> Air Cooler Blast
                     </Link>
@@ -63,7 +63,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     <Link to="/room-controller" onClick={toggleSidebar}>
                         <FaThermometerHalf className="sidebar-icon" /> Room Controller
                     </Link>
-                </li>
+                </li> */}
                 <li>
                     <Link to="/profile" onClick={toggleSidebar}>
                         <FaUser className="sidebar-icon" /> Profile

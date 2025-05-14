@@ -343,3 +343,10 @@ hr {
     box-shadow: var(--shadow-xl);
     animation: modalFadeIn 0.3s ease-out;
 }
+
+.action-footer button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-gap: 8px;
+}

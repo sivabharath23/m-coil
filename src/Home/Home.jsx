@@ -6,6 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import Sidebar from '../Sidebar/Sidebar';
 import { Link } from 'react-router-dom';
 import categoriesData from './Categories.json';
+import { IoMdOptions } from 'react-icons/io';
+import logo from './../assets/logo.png';
+
+
 
 const getIconForCategory = (categoryName) => {
     switch (categoryName) {
@@ -69,9 +73,16 @@ const Home = () => {
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
             {/* Back Button (Top Left) */}
-            <button className="back-btn" id="backBtn" onClick={handleBackClick}>
+            {/* <button className="back-btn" id="backBtn" onClick={handleBackClick}>
                 <FaArrowLeft />
-            </button>
+            </button> */}
+
+            <div className="app-header sticky-header-main">
+
+                <img src={logo} alt="Logo" className="sidebar-logo" />
+
+            </div>
+
 
             {/* Main Content Area */}
             <div className={`container ${isSidebarOpen ? 'sidebar-open' : ''}`}>

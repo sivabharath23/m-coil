@@ -88,10 +88,17 @@
 }
 
 .input-group label {
-    display: block;
+    display: flex;
+    align-items: center;
     margin-bottom: 5px;
     color: var(--dark);
     font-size: 0.9rem;
+}
+
+.input-group label svg {
+
+    color: var(--primary) !important;
+
 }
 
 .input-group input,

@@ -3,11 +3,13 @@ import { useNavigate, Link } from 'react-router-dom';
 import Cropper from 'cropperjs';
 import Swal from 'sweetalert2';
 
+
+
 import {
+    FaEnvelope,
     FaTh,
     FaHome,
     FaUser,
-    FaBars,
     FaImage,
     FaEdit,
     FaCog,
@@ -29,7 +31,6 @@ const Profile = () => {
     const [user, setUser] = useState({
         name: 'Sivabharath',
         email: 'siva@example.com',
-        age: 23,
         profileImage: profileimg
     });
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -42,7 +43,6 @@ const Profile = () => {
     const [editForm, setEditForm] = useState({
         name: '',
         email: '',
-        age: ''
     });
 
     useEffect(() => {
@@ -53,7 +53,6 @@ const Profile = () => {
             setEditForm({
                 name: parsedUser.name,
                 email: parsedUser.email,
-                age: parsedUser.age
             });
         }
     }, []);
@@ -247,9 +246,8 @@ const Profile = () => {
                     </div>
 
                     <div className="profile-info">
-                        <h3>{user.name}</h3>
-                        <p className="profile-email">{user.email}</p>
-                        <p className="profile-age">Age: {user.age}</p>
+                        <h3><span className="icon-badge"><FaUser /></span>{user.name}</h3>
+                        <p className="profile-email"><span className="icon-badge"><FaEnvelope /></span>{user.email}</p>
                     </div>
 
                     <div className="profile-actions">
@@ -324,9 +322,15 @@ const Profile = () => {
                                 <FaTimes size={18} />
                             </button>
                         </div>
+
                         <div className="modal-body">
                             <form onSubmit={handleEditSubmit} className="edit-form">
-                                <div className="form-group">
+
+                                <div className="input-group">
+                                    <label>
+                                        <FaUser style={{ marginRight: '6px', color: '#555' }} />
+                                        Full Name
+                                    </label>
                                     <input
                                         type="text"
                                         id="name"
@@ -335,12 +339,15 @@ const Profile = () => {
                                         onChange={handleEditFormChange}
                                         placeholder="Enter your full name"
                                         required
-                                        className='form-control'
+                                        className="form-control"
                                     />
-                                    <label className='form-label' htmlFor="name">Full Name</label>
-
                                 </div>
-                                <div className="form-group">
+
+                                <div className="input-group">
+                                    <label>
+                                        <FaEnvelope style={{ marginRight: '6px', color: '#555' }} />
+                                        Email Address
+                                    </label>
                                     <input
                                         type="email"
                                         id="email"
@@ -349,25 +356,8 @@ const Profile = () => {
                                         onChange={handleEditFormChange}
                                         placeholder="example@email.com"
                                         required
-                                        className='form-control'
+                                        className="form-control"
                                     />
-                                    <label className='form-label' htmlFor="email">Email Address</label>
-
-                                </div>
-                                <div className="form-group">
-                                    <input
-                                        type="number"
-                                        id="age"
-                                        name="age"
-                                        value={editForm.age}
-                                        onChange={handleEditFormChange}
-                                        min="1"
-                                        placeholder="Enter your age"
-                                        required
-                                        className='form-control'
-                                    />
-                                    <label className='form-label' htmlFor="age">Age</label>
-
                                 </div>
 
                                 <div className="modal-footer">
@@ -384,6 +374,7 @@ const Profile = () => {
                                 </div>
                             </form>
                         </div>
+
                     </div>
                 </div>
             )}

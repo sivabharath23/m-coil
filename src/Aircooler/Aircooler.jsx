@@ -21,7 +21,7 @@ import './Aircooler.css';
 
 const AirCooler = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [activeTab, setActiveTab] = useState('search'); // 'search' or 'calculate'
+    const [activeTab, setActiveTab] = useState('search');
     const navigate = useNavigate();
 
     const [capacity, setCapacity] = useState(5);

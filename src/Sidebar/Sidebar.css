@@ -15,10 +15,8 @@
     --gray: #adb5bd;
     --light-gray: #e9ecef;
     --white: #ffffff;
-
     --gradient-primary: linear-gradient(135deg, var(--primary), var(--accent));
     --gradient-secondary: linear-gradient(135deg, var(--secondary), var(--primary));
-
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
@@ -97,12 +95,13 @@
 }
 
 .sidebar-menu li {
-    padding: 15px 20px;
+
     border-bottom: 1px solid var(--light-gray);
     transition: var(--transition);
 }
 
 .sidebar-menu li a {
+    padding: 15px 20px;
     text-decoration: none;
     color: var(--dark);
     display: flex;

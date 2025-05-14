@@ -74,7 +74,7 @@ const Result = () => {
                             className="download-btn"
                             onClick={handleDownloadPDF}
                         >
-                            <FaDownload /> Download PDF
+                            <FaDownload /> Download
                         </button>
                     </div>
 

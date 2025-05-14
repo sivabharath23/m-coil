@@ -172,7 +172,7 @@ hr {
     }
 
     .app-header {
-        padding: 3rem 0 1rem;
+        padding: 2rem 0 1rem;
     }
 
     .app-header p {
@@ -243,7 +243,7 @@ hr {
 /* App Header */
 .app-header {
     text-align: center;
-    padding: 3rem 0 1rem;
+    padding: 2rem 0 1rem;
     position: relative;
 }
 
@@ -349,4 +349,46 @@ hr {
     justify-content: center;
     align-items: center;
     grid-gap: 8px;
+}
+
+.app-container {
+    margin-bottom: 60px;
+}
+
+.icon-btn {
+    display: flex;
+    border: 1px solid #ccc !important;
+    border-radius: 100px;
+}
+
+/* background: rgb(203 222 241); */
+
+.sticky-header-main {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: linear-gradient(to right, #f0f4f8, #e2ecf5);
+    color: #fff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: background 0.3s ease-in-out;
+}
+
+.icon-badge {
+    background-color: #4e73df;
+    padding: 6px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
 }

@@ -341,3 +341,14 @@ hr {
     box-shadow: var(--shadow-xl);
     animation: modalFadeIn 0.3s ease-out;
 }
+
+.app-container {
+    margin-bottom: 70px;
+}
+
+.action-footer button {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    grid-gap: 10px;
+}

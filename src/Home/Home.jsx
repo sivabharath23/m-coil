@@ -76,7 +76,8 @@ const Home = () => {
             {/* Main Content Area */}
             <div className={`container ${isSidebarOpen ? 'sidebar-open' : ''}`}>
                 <div className="app-header">
-                    <p data-translate-key="indexappheadertext">Find the ideal air cooler for your room's unique needs.</p>
+                    <p data-translate-key="indexappheadertext">Ideal air cooler for your room's unique needs.</p>
+
                 </div>
 
                 <div className="index-row">

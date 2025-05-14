@@ -1,12 +1,9 @@
 .app-container {
     max-width: 100%;
-    /* Remove overflow-x: hidden or change to visible */
     overflow-x: visible;
-    /* Changed from hidden */
     background-color: var(--light);
     min-height: 100vh;
     padding-bottom: 80px;
-    /* Add these to ensure proper sticky context */
     position: relative;
     height: 100%;
 }

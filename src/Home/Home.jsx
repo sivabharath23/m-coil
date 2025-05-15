@@ -8,8 +8,7 @@ import { Link } from 'react-router-dom';
 import categoriesData from './Categories.json';
 import { IoMdOptions } from 'react-icons/io';
 import logo from './../assets/logo.png';
-
-
+import { useTranslation } from 'react-i18next'; // Importing the useTranslation hook
 
 const getIconForCategory = (categoryName) => {
     switch (categoryName) {
@@ -38,6 +37,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 console.log('API URL:', apiUrl);
 
 const Home = () => {
+    const { t } = useTranslation(); // Initialize the translation hook
     const [categories, setCategories] = useState([]);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navigate = useNavigate();
@@ -54,41 +54,20 @@ const Home = () => {
         setCategories(categoriesData);
     }, []);
 
-    // useEffect(() => {
-    //     const fetchCategories = async () => {
-    //         try {
-    //             const response = await axios.get(`${apiUrl}/categories`);
-    //             setCategories(response.data);
-    //         } catch (error) {
-    //             console.error('Error fetching categories:', error);
-    //         }
-    //     };
-
-    //     fetchCategories();
-    // }, [apiUrl]);
-
     return (
         <div className="app-container">
             {/* Sidebar Component */}
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
-            {/* Back Button (Top Left) */}
-            {/* <button className="back-btn" id="backBtn" onClick={handleBackClick}>
-                <FaArrowLeft />
-            </button> */}
-
             <div className="app-header sticky-header-main">
-
                 <img src={logo} alt="Logo" className="sidebar-logo" />
-
             </div>
-
 
             {/* Main Content Area */}
             <div className={`container ${isSidebarOpen ? 'sidebar-open' : ''}`}>
                 <div className="app-header">
-                    <p data-translate-key="indexappheadertext">Ideal air cooler for your room's unique needs.</p>
-
+                    {/* Translated Header */}
+                    <p>{t('indexappheadertext', 'Ideal air cooler for your room\'s unique needs.')}</p>
                 </div>
 
                 <div className="index-row">
@@ -107,7 +86,8 @@ const Home = () => {
                                     <div className="icon">
                                         {getIconForCategory(category.name)}
                                     </div>
-                                    <h5 className="title">{category.name}</h5>
+                                    {/* Translated Category Name */}
+                                    <h5 className="title">{t(category.name, category.name)}</h5>
                                 </div>
                             </Link>
                         );
@@ -119,15 +99,15 @@ const Home = () => {
             <div className="bottom-nav">
                 <button className="btn" id="menuBtn" onClick={toggleSidebar}>
                     <FaTh />
-                    <span className="btn-label">Menu</span>
+                    <span className="btn-label">{t('menu', 'Menu')}</span>
                 </button>
                 <Link className="btn active" id="homeBtn" to="/home">
                     <FaHome />
-                    <span className="btn-label">Home</span>
+                    <span className="btn-label">{t('home', 'Home')}</span>
                 </Link>
                 <Link className="btn" id="profileBtn" to="/profile">
                     <FaUser />
-                    <span className="btn-label">Profile</span>
+                    <span className="btn-label">{t('profile', 'Profile')}</span>
                 </Link>
             </div>
         </div>

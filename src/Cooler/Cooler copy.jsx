@@ -6,8 +6,6 @@ import {
     FaFan, FaTemperatureLow, FaTemperatureHigh, FaSnowflake, FaTint, FaMountain
 } from 'react-icons/fa';
 import Swal from 'sweetalert2';
-import { useTranslation } from 'react-i18next';
-
 
 import { IoMdOptions } from 'react-icons/io';
 import Sidebar from '../Sidebar/Sidebar';
@@ -17,14 +15,13 @@ import './Cooler.css';
 import fieldsData from './fieldsData.json';
 
 const Cooler = () => {
-    const { t } = useTranslation();
-
     const { type } = useParams();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [activeTab, setActiveTab] = useState('search');
     const navigate = useNavigate();
     const [state, setState] = useState({});
     const [calculationResult, setCalculationResult] = useState(null);
+    const [showResult, setShowResult] = useState(false);
 
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
     const handleBackClick = () => navigate(-1);
@@ -155,10 +152,10 @@ const Cooler = () => {
 
 
     const handleCalculate = () => {
-        // Show loading spinner with translated texts
+        // Show loading spinner
         Swal.fire({
-            title: t('calculating'), // Using t() to translate "Calculating..."
-            text: t('pleaseWait'), // Using t() to translate "Please wait while we calculate your cooling needs."
+            title: 'Calculating...',
+            text: 'Please wait while we calculate your cooling needs.',
             allowOutsideClick: false,
             allowEscapeKey: false,
             didOpen: () => {
@@ -171,10 +168,10 @@ const Cooler = () => {
             const result = calculateCoolingRequirements(state);
 
             Swal.fire({
-                title: t('calculationComplete'),
-                text: t('yourCoolingNeedsCalculated'),
+                title: 'Calculation Complete',
+                text: 'Your cooling requirements have been calculated.',
                 icon: 'success',
-                confirmButtonText: t('viewResult')
+                confirmButtonText: 'View Result'
             }).then((res) => {
                 if (res.isConfirmed) {
                     navigate('/result', { state: { result } });
@@ -183,22 +180,17 @@ const Cooler = () => {
         }, 1000);
     };
 
-
     useEffect(() => {
         if (type) {
             const formattedTitle = type
                 .split('-')
-                .map(word => {
-                    const capitalizedWord = word.charAt(0).toUpperCase() + word.slice(1);
-                    return t(capitalizedWord);
-                })
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
                 .join(' ');
-
             setTitle(formattedTitle);
         } else {
-            setTitle(t('noTitle'));
+            setTitle('No Title');
         }
-    }, [type, t]);
+    }, [type]);
 
     useEffect(() => {
         if (title && fieldsData[title]) {
@@ -246,23 +238,62 @@ const Cooler = () => {
                         className={`tab-btn ${activeTab === 'search' ? 'active' : ''}`}
                         onClick={() => {
                             setActiveTab('search');
+                            setShowResult(false);
                         }}
                     >
                         <FaSearch className="tab-icon" />
-                        <span>{t('searchCoolers')}</span> {/* Translates 'Search Coolers' */}
+                        <span>Search Coolers</span>
                     </button>
                     <button
                         className={`tab-btn ${activeTab === 'calculate' ? 'active' : ''}`}
                         onClick={() => {
                             setActiveTab('calculate');
+                            setShowResult(false);
                         }}
                     >
                         <FaCalculator className="tab-icon" />
-                        <span>{t('calculate')}</span> {/* Translates 'Calculate' */}
+                        <span>Calculate</span>
                     </button>
                 </div>
 
-                {(
+                {showResult ? (
+                    <div className="result-container">
+                        <h3 className="result-title">Cooling Requirements</h3>
+
+                        <div className="result-summary">
+                            <div className="result-card primary">
+                                <h4>Total Cooling Load</h4>
+                                <p className="result-value">{calculationResult.coolingLoadKW} kW</p>
+                                <p className="result-subtext">{calculationResult.coolingCapacityBTU} BTU/h</p>
+                            </div>
+
+                            <div className="result-card secondary">
+                                <h4>Recommended System</h4>
+                                <p className="result-value">{calculationResult.recommendedType}</p>
+                            </div>
+                        </div>
+
+                        <div className="result-details">
+                            <h4>Calculation Details</h4>
+                            <ul>
+                                <li>Room Volume: <span>{calculationResult.calculationDetails.roomVolume}</span></li>
+                                <li>Temperature Difference: <span>{calculationResult.calculationDetails.temperatureDifference}</span></li>
+                                <li>Sensible Heat: <span>{calculationResult.calculationDetails.sensibleHeat}</span></li>
+                                <li>Latent Heat: <span>{calculationResult.calculationDetails.latentHeat}</span></li>
+                                <li>Total Heat Sources: <span>{calculationResult.calculationDetails.totalHeatSources}</span></li>
+                                <li>Sunlight Factor: <span>{calculationResult.calculationDetails.sunlightFactor}x</span></li>
+                                <li>Insulation Factor: <span>{calculationResult.calculationDetails.insulationFactor}x</span></li>
+                            </ul>
+                        </div>
+
+                        <button
+                            className="primary-btn"
+                            onClick={() => setShowResult(false)}
+                        >
+                            Back to Input
+                        </button>
+                    </div>
+                ) : (
                     <div className='field-container'>
                         {Object.entries(groupFieldsBySection(fields)).map(([sectionTitle, sectionFields]) => (
                             <div className="card-section" key={sectionTitle}>
@@ -312,7 +343,7 @@ const Cooler = () => {
                                         );
                                     }
 
-                                    if (type === 'select(button)') {
+                                    if (type === 'select') {
                                         return (
                                             <div className="input-group" key={name}>
                                                 <label>{label}</label>
@@ -328,27 +359,6 @@ const Cooler = () => {
                                                         </button>
                                                     ))}
                                                 </div>
-                                            </div>
-                                        );
-                                    }
-
-                                    if (type === 'select(normal)') {
-                                        return (
-                                            <div className="input-group" key={name}>
-                                                <label htmlFor={name}>{label}</label>
-                                                <select
-                                                    id={name}
-                                                    name={name}
-                                                    value={state[name] || ''}
-                                                    onChange={(e) => handleChange(name, e.target.value)}
-                                                >
-                                                    <option value="" disabled>Select an option</option>
-                                                    {options?.map((option) => (
-                                                        <option key={option.value} value={option.value}>
-                                                            {option.label}
-                                                        </option>
-                                                    ))}
-                                                </select>
                                             </div>
                                         );
                                     }
@@ -385,17 +395,17 @@ const Cooler = () => {
                             <button
                                 className="primary-btn"
                                 onClick={handleCalculate}
-                                disabled={!Object.keys(state).length} // Disable button if state is empty
+                                disabled={!Object.keys(state).length}
                             >
                                 {activeTab === 'search' ? (
                                     <>
                                         <FaSearch className="btn-icon" />
-                                        {t('searchCoolers')} {/* Translates 'Search Coolers' */}
+                                        Search Coolers
                                     </>
                                 ) : (
                                     <>
                                         <FaCalculator className="btn-icon" />
-                                        {t('calculateCoolingNeeds')} {/* Translates 'Calculate Cooling Needs' */}
+                                        Calculate Cooling Needs
                                     </>
                                 )}
                             </button>
@@ -405,17 +415,17 @@ const Cooler = () => {
 
                 {/* Bottom Navigation */}
                 <div className="bottom-nav">
-                    <button className="btn" onClick={toggleSidebar}>
+                    <button className="btn" id="menuBtn" onClick={toggleSidebar}>
                         <FaTh />
-                        <span className="btn-label">{t('menu')}</span>
+                        <span className="btn-label">Menu</span>
                     </button>
-                    <Link className="btn" to="/home">
+                    <Link className="btn" id="homeBtn" to="/home">
                         <FaHome />
-                        <span className="btn-label">{t('home')}</span>
+                        <span className="btn-label">Home</span>
                     </Link>
-                    <Link className="btn active" to="/profile">
+                    <Link className="btn active" id="profileBtn" to="/profile">
                         <FaUser />
-                        <span className="btn-label">{t('profile')}</span>
+                        <span className="btn-label">Profile</span>
                     </Link>
                 </div>
             </div>

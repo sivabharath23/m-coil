@@ -4,7 +4,9 @@
             "name": "capacity",
             "type": "number",
             "section": "Air Cooler Settings",
-            "default": 5
+            "default": 5,
+            "min": 1,
+            "max": 100
         },
         {
             "name": "withCorrosionProtection",
@@ -14,7 +16,31 @@
         },
         {
             "name": "fluidType",
-            "type": "select",
+            "type": "select(button)",
+            "section": "Fluid Settings",
+            "options": [
+                {
+                    "value": "R513A",
+                    "label": "R513A"
+                },
+                {
+                    "value": "R744",
+                    "label": "R744"
+                },
+                {
+                    "value": "A2L",
+                    "label": "A2L/A3"
+                },
+                {
+                    "value": "A2L11",
+                    "label": "A2L/A31"
+                }
+            ],
+            "default": "R513A"
+        },
+        {
+            "name": "fluidType1",
+            "type": "select(normal)",
             "section": "Fluid Settings",
             "options": [
                 {
@@ -40,43 +66,57 @@
             "name": "evapTemp",
             "type": "number",
             "section": "Fluid Settings",
-            "default": -8
+            "default": -8,
+            "min": -40,
+            "max": 10
         },
         {
             "name": "condTemp",
             "type": "number",
             "section": "Fluid Settings",
-            "default": 32
+            "default": 32,
+            "min": 10,
+            "max": 60
         },
         {
             "name": "superheating",
             "type": "number",
             "section": "Fluid Settings",
-            "default": 5.2
+            "default": 5.2,
+            "min": 0,
+            "max": 20
         },
         {
             "name": "subcooling",
             "type": "number",
             "section": "Fluid Settings",
-            "default": 2
+            "default": 2,
+            "min": 0,
+            "max": 15
         },
         {
             "name": "inletTemp",
             "type": "number",
             "section": "Air Settings",
-            "default": 0
+            "default": 0,
+            "min": -20,
+            "max": 50
         },
         {
             "name": "humidity",
             "type": "number",
             "section": "Air Settings",
-            "default": 85
+            "default": 85,
+            "min": 0,
+            "max": 100
         },
         {
             "name": "elevation",
             "type": "number",
             "section": "Air Settings",
-            "default": 0
+            "default": 0,
+            "min": 0,
+            "max": 5000
         }
     ],
     "Dry Coolers": [
@@ -84,11 +124,13 @@
             "name": "capacity",
             "type": "number",
             "section": "Air Cooler Settings",
-            "default": 5
+            "default": 5,
+            "min": 1,
+            "max": 100
         },
         {
             "name": "fluidType",
-            "type": "select",
+            "type": "select(button)",
             "section": "Fluid Settings",
             "options": [
                 {
@@ -110,19 +152,25 @@
             "name": "inletTemp",
             "type": "number",
             "section": "Air Settings",
-            "default": 0
+            "default": 0,
+            "min": -20,
+            "max": 50
         },
         {
             "name": "humidity",
             "type": "number",
             "section": "Air Settings",
-            "default": 85
+            "default": 85,
+            "min": 0,
+            "max": 100
         },
         {
             "name": "elevation",
             "type": "number",
             "section": "Air Settings",
-            "default": 0
+            "default": 0,
+            "min": 0,
+            "max": 5000
         }
     ],
     "Evaporator Coils": [
@@ -130,11 +178,13 @@
             "name": "capacity",
             "type": "number",
             "section": "Air Cooler Settings",
-            "default": 5
+            "default": 5,
+            "min": 1,
+            "max": 100
         },
         {
             "name": "fluidType",
-            "type": "select",
+            "type": "select(button)",
             "section": "Fluid Settings",
             "options": [
                 {
@@ -156,13 +206,17 @@
             "name": "evapTemp",
             "type": "number",
             "section": "Fluid Settings",
-            "default": -8
+            "default": -8,
+            "min": -40,
+            "max": 10
         },
         {
             "name": "superheating",
             "type": "number",
             "section": "Fluid Settings",
-            "default": 5.2
+            "default": 5.2,
+            "min": 0,
+            "max": 20
         }
     ],
     "Heat Exchanger": [
@@ -170,11 +224,13 @@
             "name": "capacity",
             "type": "number",
             "section": "Air Cooler Settings",
-            "default": 5
+            "default": 5,
+            "min": 1,
+            "max": 100
         },
         {
             "name": "fluidType",
-            "type": "select",
+            "type": "select(button)",
             "section": "Fluid Settings",
             "options": [
                 {
@@ -196,13 +252,17 @@
             "name": "inletTemp",
             "type": "number",
             "section": "Fluid Settings",
-            "default": 0
+            "default": 0,
+            "min": -20,
+            "max": 50
         },
         {
             "name": "subcooling",
             "type": "number",
             "section": "Fluid Settings",
-            "default": 2
+            "default": 2,
+            "min": 0,
+            "max": 15
         }
     ],
     "Telecom Units": [
@@ -210,7 +270,9 @@
             "name": "capacity",
             "type": "number",
             "section": "Air Cooler Settings",
-            "default": 5
+            "default": 5,
+            "min": 1,
+            "max": 100
         },
         {
             "name": "withCorrosionProtection",
@@ -222,7 +284,9 @@
             "name": "elevation",
             "type": "number",
             "section": "Air Settings",
-            "default": 0
+            "default": 0,
+            "min": 0,
+            "max": 5000
         }
     ],
     "Bulk Milk Cooling Systems": [
@@ -230,11 +294,13 @@
             "name": "capacity",
             "type": "number",
             "section": "Cooling Settings",
-            "default": 5
+            "default": 5,
+            "min": 1,
+            "max": 100
         },
         {
             "name": "fluidType",
-            "type": "select",
+            "type": "select(button)",
             "section": "Cooling Settings",
             "options": [
                 {
@@ -256,13 +322,17 @@
             "name": "evapTemp",
             "type": "number",
             "section": "Cooling Settings",
-            "default": -8
+            "default": -8,
+            "min": -40,
+            "max": 10
         },
         {
             "name": "condTemp",
             "type": "number",
             "section": "Cooling Settings",
-            "default": 32
+            "default": 32,
+            "min": 10,
+            "max": 60
         }
     ],
     "Air Cooler": [
@@ -270,7 +340,9 @@
             "name": "capacity",
             "type": "number",
             "section": "Air Cooler Settings",
-            "default": 5
+            "default": 5,
+            "min": 1,
+            "max": 100
         }
     ]
 }

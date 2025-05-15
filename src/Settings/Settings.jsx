@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
 import {
-    FaTimes,
-    FaCheckCircle,
-    FaTimesCircle,
-    FaArrowLeft,
-    FaTh,
-    FaHome,
-    FaUser,
-    FaGlobe,
-    FaMoneyBillWave,
-    FaRuler,
-    FaLanguage,
-    FaEuroSign,
-    FaPoundSign,
-    FaRupeeSign,
-    FaDollarSign,
-    FaWeight,
-    FaBalanceScale
+    FaTimes, FaCheckCircle, FaTimesCircle, FaArrowLeft, FaTh,
+    FaHome, FaUser, FaGlobe, FaMoneyBillWave, FaRuler,
+    FaLanguage, FaEuroSign, FaPoundSign, FaRupeeSign,
+    FaDollarSign, FaWeight, FaBalanceScale
 } from 'react-icons/fa';
+
 import Sidebar from '../Sidebar/Sidebar';
 import './../assets/style.css';
 import './Settings.css';
@@ -26,48 +16,37 @@ import './Settings.css';
 const Settings = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation();
 
     const [currentLanguage, setCurrentLanguage] = useState('en');
     const [currentCurrency, setCurrentCurrency] = useState('USD');
     const [currentUOM, setCurrentUOM] = useState('kg');
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-    const [pendingChange, setPendingChange] = useState({
-        type: '',
-        value: ''
-    });
+    const [pendingChange, setPendingChange] = useState({ type: '', value: '' });
 
-    // Load saved settings from localStorage on component mount
     useEffect(() => {
         const savedLanguage = localStorage.getItem('language') || 'en';
-        const savedCurrency = localStorage.getItem('currency') || 'USD';
+        const savedCurrency = localStorage.getItem('currency') || 'INR';
         const savedUOM = localStorage.getItem('uom') || 'kg';
 
         setCurrentLanguage(savedLanguage);
         setCurrentCurrency(savedCurrency);
         setCurrentUOM(savedUOM);
+        i18n.changeLanguage(savedLanguage);
     }, []);
 
     const handleLanguageChange = (lang) => {
-        setPendingChange({
-            type: 'language',
-            value: lang
-        });
+        setPendingChange({ type: 'language', value: lang });
         setShowConfirmationModal(true);
     };
 
     const handleCurrencyChange = (currency) => {
-        setPendingChange({
-            type: 'currency',
-            value: currency
-        });
+        setPendingChange({ type: 'currency', value: currency });
         setShowConfirmationModal(true);
     };
 
     const handleUOMChange = (uom) => {
-        setPendingChange({
-            type: 'uom',
-            value: uom
-        });
+        setPendingChange({ type: 'uom', value: uom });
         setShowConfirmationModal(true);
     };
 
@@ -76,6 +55,7 @@ const Settings = () => {
             case 'language':
                 setCurrentLanguage(pendingChange.value);
                 localStorage.setItem('language', pendingChange.value);
+                i18n.changeLanguage(pendingChange.value);
                 break;
             case 'currency':
                 setCurrentCurrency(pendingChange.value);
@@ -91,28 +71,22 @@ const Settings = () => {
         setShowConfirmationModal(false);
     };
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
-
-    const handleBackClick = () => {
-        navigate(-1);
-    };
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+    const handleBackClick = () => navigate(-1);
 
     const getSettingName = () => {
         switch (pendingChange.type) {
             case 'language':
-                return pendingChange.value === 'en' ? 'English' :
-                    pendingChange.value === 'es' ? 'Español' :
-                        pendingChange.value === 'fr' ? 'Français' : 'Deutsch';
+                return t(pendingChange.value);
             case 'currency':
-                return pendingChange.value === 'USD' ? 'USD ($)' :
-                    pendingChange.value === 'EUR' ? 'EUR (€)' :
-                        pendingChange.value === 'GBP' ? 'GBP (£)' : 'INR (₹)';
+                return {
+                    USD: 'USD ($)',
+                    EUR: 'EUR (€)',
+                    GBP: 'GBP (£)',
+                    INR: 'INR (₹)',
+                }[pendingChange.value];
             case 'uom':
-                return pendingChange.value === 'kg' ? 'Kilogram (kg)' :
-                    pendingChange.value === 'lb' ? 'Pound (lb)' :
-                        pendingChange.value === 'g' ? 'Gram (g)' : 'Meter (m)';
+                return t(pendingChange.value);
             default:
                 return '';
         }
@@ -130,11 +104,15 @@ const Settings = () => {
 
     const getUOMIcon = (uom) => {
         switch (uom) {
-            case 'kg': return <FaWeight />;
-            case 'lb': return <FaBalanceScale />;
-            case 'g': return <FaWeight />;
-            case 'm': return <FaRuler />;
-            default: return <FaRuler />;
+            case 'kg':
+            case 'g':
+                return <FaWeight />;
+            case 'lb':
+                return <FaBalanceScale />;
+            case 'm':
+                return <FaRuler />;
+            default:
+                return <FaRuler />;
         }
     };
 
@@ -142,58 +120,33 @@ const Settings = () => {
         <div className={`app-container my-5 ${isSidebarOpen ? 'sidebar-open' : ''}`}>
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
-            {/* Back Button (Top Left) */}
-            <button className="back-btn" id="backBtn" onClick={handleBackClick}>
+            <button className="back-btn" onClick={handleBackClick}>
                 <FaArrowLeft />
             </button>
 
-            <div className={`container`}>
+            <div className="container">
                 <div className="app-header mb-5">
-                    <h2>Settings</h2>
-                    <p>Customize your app preferences</p>
+                    <h2>{t('settings')}</h2>
+                    <p>{t('customizePreferences')}</p>
                 </div>
 
                 {/* Language Selection */}
                 <div className="card shadow-lg rounded border-0">
                     <div className="card-body">
-                        <h4 className="text-center section-title"><FaLanguage /> Language</h4>
+                        <h4 className="text-center section-title"><FaLanguage /> {t('language')}</h4>
                         <hr />
                         <div className="option-grid">
-                            <div
-                                className={`option-card ${currentLanguage === 'en' ? 'active' : ''}`}
-                                onClick={() => handleLanguageChange('en')}
-                            >
-                                <div className="option-icon"><FaGlobe /></div>
-                                <div className="option-label">English</div>
-                                {currentLanguage === 'en' && <div className="option-check">✓</div>}
-                            </div>
-
-                            <div
-                                className={`option-card ${currentLanguage === 'es' ? 'active' : ''}`}
-                                onClick={() => handleLanguageChange('es')}
-                            >
-                                <div className="option-icon"><FaGlobe /></div>
-                                <div className="option-label">Español</div>
-                                {currentLanguage === 'es' && <div className="option-check">✓</div>}
-                            </div>
-
-                            <div
-                                className={`option-card ${currentLanguage === 'fr' ? 'active' : ''}`}
-                                onClick={() => handleLanguageChange('fr')}
-                            >
-                                <div className="option-icon"><FaGlobe /></div>
-                                <div className="option-label">Français</div>
-                                {currentLanguage === 'fr' && <div className="option-check">✓</div>}
-                            </div>
-
-                            <div
-                                className={`option-card ${currentLanguage === 'de' ? 'active' : ''}`}
-                                onClick={() => handleLanguageChange('de')}
-                            >
-                                <div className="option-icon"><FaGlobe /></div>
-                                <div className="option-label">Deutsch</div>
-                                {currentLanguage === 'de' && <div className="option-check">✓</div>}
-                            </div>
+                            {['en', 'es', 'fr', 'de'].map((lang) => (
+                                <div
+                                    key={lang}
+                                    className={`option-card ${currentLanguage === lang ? 'active' : ''}`}
+                                    onClick={() => handleLanguageChange(lang)}
+                                >
+                                    <div className="option-icon"><FaGlobe /></div>
+                                    <div className="option-label">{t(lang)}</div>
+                                    {currentLanguage === lang && <div className="option-check">✓</div>}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -201,44 +154,20 @@ const Settings = () => {
                 {/* Currency Selection */}
                 <div className="card shadow-lg rounded border-0 mt-4">
                     <div className="card-body">
-                        <h4 className="text-center section-title"><FaMoneyBillWave /> Currency</h4>
+                        <h4 className="text-center section-title"><FaMoneyBillWave /> {t('currency')}</h4>
                         <hr />
                         <div className="option-grid">
-                            <div
-                                className={`option-card ${currentCurrency === 'USD' ? 'active' : ''}`}
-                                onClick={() => handleCurrencyChange('USD')}
-                            >
-                                <div className="option-icon">{getCurrencyIcon('USD')}</div>
-                                <div className="option-label">USD ($)</div>
-                                {currentCurrency === 'USD' && <div className="option-check">✓</div>}
-                            </div>
-
-                            <div
-                                className={`option-card ${currentCurrency === 'EUR' ? 'active' : ''}`}
-                                onClick={() => handleCurrencyChange('EUR')}
-                            >
-                                <div className="option-icon">{getCurrencyIcon('EUR')}</div>
-                                <div className="option-label">EUR (€)</div>
-                                {currentCurrency === 'EUR' && <div className="option-check">✓</div>}
-                            </div>
-
-                            <div
-                                className={`option-card ${currentCurrency === 'GBP' ? 'active' : ''}`}
-                                onClick={() => handleCurrencyChange('GBP')}
-                            >
-                                <div className="option-icon">{getCurrencyIcon('GBP')}</div>
-                                <div className="option-label">GBP (£)</div>
-                                {currentCurrency === 'GBP' && <div className="option-check">✓</div>}
-                            </div>
-
-                            <div
-                                className={`option-card ${currentCurrency === 'INR' ? 'active' : ''}`}
-                                onClick={() => handleCurrencyChange('INR')}
-                            >
-                                <div className="option-icon">{getCurrencyIcon('INR')}</div>
-                                <div className="option-label">INR (₹)</div>
-                                {currentCurrency === 'INR' && <div className="option-check">✓</div>}
-                            </div>
+                            {['USD', 'EUR', 'GBP', 'INR'].map((cur) => (
+                                <div
+                                    key={cur}
+                                    className={`option-card ${currentCurrency === cur ? 'active' : ''}`}
+                                    onClick={() => handleCurrencyChange(cur)}
+                                >
+                                    <div className="option-icon">{getCurrencyIcon(cur)}</div>
+                                    <div className="option-label">{cur}</div>
+                                    {currentCurrency === cur && <div className="option-check">✓</div>}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -246,72 +175,40 @@ const Settings = () => {
                 {/* Unit of Measurement Selection */}
                 <div className="card shadow-lg rounded border-0 mt-4">
                     <div className="card-body">
-                        <h4 className="text-center section-title"><FaRuler /> Unit of Measurement</h4>
+                        <h4 className="text-center section-title"><FaRuler /> {t('uom')}</h4>
                         <hr />
                         <div className="option-grid">
-                            <div
-                                className={`option-card ${currentUOM === 'kg' ? 'active' : ''}`}
-                                onClick={() => handleUOMChange('kg')}
-                            >
-                                <div className="option-icon">{getUOMIcon('kg')}</div>
-                                <div>
-                                    <div className="option-label">Kilogram</div>
-                                    <div className="option-subtext">(kg)</div>
+                            {['kg', 'lb', 'g', 'm'].map((unit) => (
+                                <div
+                                    key={unit}
+                                    className={`option-card ${currentUOM === unit ? 'active' : ''}`}
+                                    onClick={() => handleUOMChange(unit)}
+                                >
+                                    <div className="option-icon">{getUOMIcon(unit)}</div>
+                                    <div>
+                                        <div className="option-label">{t(unit)}</div>
+                                        <div className="option-subtext">({unit})</div>
+                                    </div>
+                                    {currentUOM === unit && <div className="option-check">✓</div>}
                                 </div>
-                                {currentUOM === 'kg' && <div className="option-check">✓</div>}
-                            </div>
-
-                            <div
-                                className={`option-card ${currentUOM === 'lb' ? 'active' : ''}`}
-                                onClick={() => handleUOMChange('lb')}
-                            >
-                                <div className="option-icon">{getUOMIcon('lb')}</div>
-                                <div>
-                                    <div className="option-label">Pound</div>
-                                    <div className="option-subtext">(lb)</div>
-                                </div>
-                                {currentUOM === 'lb' && <div className="option-check">✓</div>}
-                            </div>
-
-                            <div
-                                className={`option-card ${currentUOM === 'g' ? 'active' : ''}`}
-                                onClick={() => handleUOMChange('g')}
-                            >
-                                <div className="option-icon">{getUOMIcon('g')}</div>
-                                <div>
-                                    <div className="option-label">Gram</div>
-                                    <div className="option-subtext">(g)</div>
-                                </div>
-                                {currentUOM === 'g' && <div className="option-check">✓</div>}
-                            </div>
-
-                            <div
-                                className={`option-card ${currentUOM === 'm' ? 'active' : ''}`}
-                                onClick={() => handleUOMChange('m')}
-                            >
-                                <div className="option-icon">{getUOMIcon('m')}</div>
-                                <div>
-                                    <div className="option-label">Meter</div>
-                                    <div className="option-subtext">(m)</div>
-                                </div>
-                                {currentUOM === 'm' && <div className="option-check">✓</div>}
-                            </div>
+                            ))}
                         </div>
                     </div>
                 </div>
 
+                {/* Bottom Navigation */}
                 <div className="bottom-nav">
-                    <button className="btn" id="menuBtn" onClick={toggleSidebar}>
+                    <button className="btn" onClick={toggleSidebar}>
                         <FaTh />
-                        <span className="btn-label">Menu</span>
+                        <span className="btn-label">{t('menu')}</span>
                     </button>
-                    <Link className="btn" id="homeBtn" to="/home">
+                    <Link className="btn" to="/home">
                         <FaHome />
-                        <span className="btn-label">Home</span>
+                        <span className="btn-label">{t('home')}</span>
                     </Link>
-                    <Link className="btn" id="profileBtn" to="/profile">
+                    <Link className="btn" to="/profile">
                         <FaUser />
-                        <span className="btn-label">Profile</span>
+                        <span className="btn-label">{t('profile')}</span>
                     </Link>
                 </div>
 
@@ -320,7 +217,7 @@ const Settings = () => {
                     <div className="modal-overlay">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h2 className="modal-title">Confirm Change</h2>
+                                <h2 className="modal-title">{t('confirmChange')}</h2>
                                 <button
                                     type="button"
                                     className="close-btn"
@@ -329,28 +226,24 @@ const Settings = () => {
                                     <FaTimes />
                                 </button>
                             </div>
-
                             <div className="modal-body">
-                                <p className="mb-2">Are you sure you want to change this setting?</p>
-                                <p className="mb-0 setting">
-                                    <strong>{getSettingName()}</strong>
-                                </p>
+                                <p>{t('areYouSure')}</p>
+                                <p className="setting"><strong>{getSettingName()}</strong></p>
                             </div>
-
                             <div className="modal-footer">
                                 <button
                                     type="button"
                                     className="btn btn-outline-danger btn-lg w-100"
                                     onClick={() => setShowConfirmationModal(false)}
                                 >
-                                    <FaTimesCircle /> Cancel
+                                    <FaTimesCircle /> {t('cancel')}
                                 </button>
                                 <button
                                     type="button"
                                     className="btn btn-success btn-lg w-100"
                                     onClick={confirmChange}
                                 >
-                                    <FaCheckCircle /> Confirm
+                                    <FaCheckCircle /> {t('confirm')}
                                 </button>
                             </div>
                         </div>

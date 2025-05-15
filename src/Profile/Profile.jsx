@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Cropper from 'cropperjs';
 import Swal from 'sweetalert2';
-
-
 
 import {
     FaEnvelope,
@@ -22,17 +21,20 @@ import {
 
 import Sidebar from '../Sidebar/Sidebar';
 import './../assets/style.css';
+import './Profile.css';
 
 import profileimg from './../assets/logo.png';
-import './Profile.css';
 
 const Profile = () => {
     const navigate = useNavigate();
+    const { t } = useTranslation();
+
     const [user, setUser] = useState({
         name: 'Sivabharath',
         email: 'siva@example.com',
         profileImage: profileimg
     });
+
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const imageRef = useRef(null);
     const cropperRef = useRef(null);
@@ -40,10 +42,7 @@ const Profile = () => {
     const [cropperModalOpen, setCropperModalOpen] = useState(false);
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [previewSrc, setPreviewSrc] = useState(null);
-    const [editForm, setEditForm] = useState({
-        name: '',
-        email: '',
-    });
+    const [editForm, setEditForm] = useState({ name: '', email: '' });
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -52,32 +51,30 @@ const Profile = () => {
             setUser(parsedUser);
             setEditForm({
                 name: parsedUser.name,
-                email: parsedUser.email,
+                email: parsedUser.email
             });
         }
     }, []);
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
+    const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
     const handleLogout = () => {
         Swal.fire({
-            title: 'Are you sure?',
-            text: 'You will be logged out of your account',
+            title: t('logoutConfirmTitle'),
+            text: t('logoutConfirmText'),
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#0066cc',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, logout!'
+            confirmButtonText: t('logoutConfirmBtn')
         }).then((result) => {
             if (result.isConfirmed) {
                 localStorage.removeItem('authToken');
                 localStorage.removeItem('user');
                 navigate('/');
                 Swal.fire({
-                    title: 'Logged out!',
-                    text: 'You have been successfully logged out.',
+                    title: t('logoutSuccessTitle'),
+                    text: t('logoutSuccessText'),
                     icon: 'success',
                     timer: 1500,
                     showConfirmButton: false
@@ -99,10 +96,7 @@ const Profile = () => {
             }
         });
 
-        Toast.fire({
-            icon: type,
-            title: message
-        });
+        Toast.fire({ icon: type, title: message });
     };
 
     const handleFileChange = (e) => {
@@ -110,7 +104,7 @@ const Profile = () => {
         if (!file) return;
 
         if (!file.type.match('image.*')) {
-            showToast('Please select an image file', 'error');
+            showToast(t('onlyImagesAllowed'), 'error');
             return;
         }
 
@@ -143,7 +137,7 @@ const Profile = () => {
         if (cropperRef.current) {
             const croppedCanvas = cropperRef.current.getCroppedCanvas();
             if (!croppedCanvas) {
-                showToast('Cropping failed. Please try again.', 'error');
+                showToast(t('cropFailed'), 'error');
                 return;
             }
 
@@ -162,7 +156,7 @@ const Profile = () => {
                 fileInputRef.current.value = '';
             }
 
-            showToast('Profile picture updated successfully!', 'success');
+            showToast(t('profilePicUpdated'), 'success');
         }
     };
 
@@ -173,22 +167,16 @@ const Profile = () => {
         }
         setCropperModalOpen(false);
         setPreviewSrc(null);
-
         if (fileInputRef.current) {
             fileInputRef.current.value = '';
         }
     };
 
-    const handleEditClick = () => {
-        setEditModalOpen(true);
-    };
+    const handleEditClick = () => setEditModalOpen(true);
 
     const handleEditFormChange = (e) => {
         const { name, value } = e.target;
-        setEditForm(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setEditForm(prev => ({ ...prev, [name]: value }));
     };
 
     const handleEditSubmit = (e) => {
@@ -196,44 +184,34 @@ const Profile = () => {
         const updatedUser = {
             ...user,
             name: editForm.name,
-            email: editForm.email,
-            age: editForm.age
+            email: editForm.email
         };
-
         setUser(updatedUser);
         localStorage.setItem('user', JSON.stringify(updatedUser));
         setEditModalOpen(false);
-        showToast('Profile updated successfully!', 'success');
+        showToast(t('profileUpdated'), 'success');
     };
 
-    const handleBackClick = () => {
-        navigate(-1);
-    };
+    const handleBackClick = () => navigate(-1);
 
     return (
         <div className={`app-container ${isSidebarOpen ? 'sidebar-open' : ''}`}>
             <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-
-            {/* Back Button (Top Left) */}
-            <button className="back-btn" id="backBtn" onClick={handleBackClick}>
+            <button className="back-btn" onClick={handleBackClick}>
                 <FaArrowLeft />
             </button>
 
             <div className="profile-content">
                 <div className="app-header">
-                    <h2>Your Profile</h2>
-                    <p>Manage your personal information and settings</p>
+                    <h2>{t('yourProfile')}</h2>
+                    <p>{t('manageProfile')}</p>
                 </div>
 
                 <div className="profile-card">
                     <div className="profile-img-container">
-                        <img
-                            src={user.profileImage}
-                            alt="Profile"
-                            className="profile-img"
-                        />
+                        <img src={user.profileImage} alt="Profile" className="profile-img" />
                         <label htmlFor="fileInput" className="change-pic-btn">
-                            <FaImage /> Change Picture
+                            <FaImage /> {t('changePicture')}
                         </label>
                         <input
                             type="file"
@@ -246,111 +224,94 @@ const Profile = () => {
                     </div>
 
                     <div className="profile-info">
-                        <h3><span className="icon-badge"><FaUser /></span>{user.name}</h3>
-                        <p className="profile-email"><span className="icon-badge"><FaEnvelope /></span>{user.email}</p>
+                        <h3><FaUser className="icon-badge" /> {user.name}</h3>
+                        <p className="profile-email"><FaEnvelope className="icon-badge" /> {user.email}</p>
                     </div>
 
                     <div className="profile-actions">
                         <button className="btn-primary" onClick={handleEditClick}>
-                            <FaEdit /> Edit Profile
+                            <FaEdit /> {t('editProfile')}
                         </button>
                         <button className="btn-secondary" onClick={() => navigate('/settings')}>
-                            <FaCog /> Settings
+                            <FaCog /> {t('settings')}
                         </button>
                         <button className="btn-danger" onClick={handleLogout}>
-                            <FaSignOutAlt /> Logout
+                            <FaSignOutAlt /> {t('logout')}
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* Bottom Navigation */}
             <div className="bottom-nav">
-                <button className="btn" id="menuBtn" onClick={toggleSidebar}>
+                <button className="btn" onClick={toggleSidebar}>
                     <FaTh />
-                    <span className="btn-label">Menu</span>
+                    <span className="btn-label">{t('menu')}</span>
                 </button>
-                <Link className="btn" id="homeBtn" to="/home">
+                <Link className="btn" to="/home">
                     <FaHome />
-                    <span className="btn-label">Home</span>
+                    <span className="btn-label">{t('home')}</span>
                 </Link>
-                <Link className="btn active" id="profileBtn" to="/profile">
+                <Link className="btn active" to="/profile">
                     <FaUser />
-                    <span className="btn-label">Profile</span>
+                    <span className="btn-label">{t('profile')}</span>
                 </Link>
             </div>
 
-            {/* Cropper Modal */}
+            {/* Crop Modal */}
             {cropperModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h3>Crop Image</h3>
+                            <h3>{t('cropImage')}</h3>
                             <button className="close-btn" onClick={closeCropper}>
                                 <FaTimes />
                             </button>
                         </div>
                         <div className="modal-body">
                             <div className="img-container">
-                                {previewSrc && (
-                                    <img
-                                        ref={imageRef}
-                                        src={previewSrc}
-                                        alt="Crop preview"
-                                        style={{ maxWidth: '100%' }}
-                                    />
-                                )}
+                                {previewSrc && <img ref={imageRef} src={previewSrc} alt="Crop preview" />}
                             </div>
                         </div>
                         <div className="modal-footer">
                             <button className="btn btn-outline-danger btn-lg w-100" onClick={closeCropper}>
-                                <FaTimesCircle /> Cancel
+                                <FaTimesCircle /> {t('cancel')}
                             </button>
                             <button className="btn btn-success btn-lg w-100" onClick={handleCrop}>
-                                <FaCheckCircle /> Crop
+                                <FaCheckCircle /> {t('crop')}
                             </button>
                         </div>
                     </div>
                 </div>
             )}
+
+            {/* Edit Modal */}
             {editModalOpen && (
                 <div className="modal-overlay">
                     <div className="modal-content animate-fadeIn">
                         <div className="modal-header">
-                            <h2>Edit Profile</h2>
+                            <h2>{t('editProfile')}</h2>
                             <button className="close-btn" onClick={() => setEditModalOpen(false)}>
                                 <FaTimes size={18} />
                             </button>
                         </div>
-
                         <div className="modal-body">
                             <form onSubmit={handleEditSubmit} className="edit-form">
-
                                 <div className="input-group">
-                                    <label>
-                                        <FaUser style={{ marginRight: '6px', color: '#555' }} />
-                                        Full Name
-                                    </label>
+                                    <label><FaUser /> {t('fullName')}</label>
                                     <input
                                         type="text"
-                                        id="name"
                                         name="name"
                                         value={editForm.name}
                                         onChange={handleEditFormChange}
-                                        placeholder="Enter your full name"
+                                        placeholder={t('enterFullName')}
                                         required
                                         className="form-control"
                                     />
                                 </div>
-
                                 <div className="input-group">
-                                    <label>
-                                        <FaEnvelope style={{ marginRight: '6px', color: '#555' }} />
-                                        Email Address
-                                    </label>
+                                    <label><FaEnvelope /> {t('emailAddress')}</label>
                                     <input
                                         type="email"
-                                        id="email"
                                         name="email"
                                         value={editForm.email}
                                         onChange={handleEditFormChange}
@@ -359,26 +320,19 @@ const Profile = () => {
                                         className="form-control"
                                     />
                                 </div>
-
                                 <div className="modal-footer">
-                                    <button
-                                        type="button"
-                                        className="btn btn-outline-danger btn-lg w-100"
-                                        onClick={() => setEditModalOpen(false)}
-                                    >
-                                        <FaTimesCircle style={{ marginRight: '6px' }} /> Cancel
+                                    <button type="button" className="btn btn-outline-danger btn-lg w-100" onClick={() => setEditModalOpen(false)}>
+                                        <FaTimesCircle /> {t('cancel')}
                                     </button>
                                     <button type="submit" className="btn btn-success btn-lg w-100">
-                                        <FaCheckCircle style={{ marginRight: '6px' }} /> Save Changes
+                                        <FaCheckCircle /> {t('saveChanges')}
                                     </button>
                                 </div>
                             </form>
                         </div>
-
                     </div>
                 </div>
             )}
-
         </div>
     );
 };

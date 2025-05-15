@@ -187,8 +187,8 @@ i18n
                     //Welcom
                     welcome: {
                         title: "Welcome to M-Coil",
-                        subtitle: "Your personal productivity companion",
-                        description: "Join thousands of users who are already boosting their productivity with our powerful tools and features.",
+                        subtitle: "Smart Cooling, Made Easy",
+                        description: "The intelligent coolant recommendation system for industrial and commercial spaces. Get personalized cooling solutions based on your room measurements",
                         login: "Log In",
                         register: "Create Account",
                         terms: "By continuing, you agree to our {terms} and {privacy}.",
@@ -375,14 +375,15 @@ i18n
                     // Pantalla de bienvenida
                     welcome: {
                         title: "Bienvenido a M-Coil",
-                        subtitle: "Tu compañero personal de productividad",
-                        description: "Únete a miles de usuarios que ya están mejorando su productividad con nuestras poderosas herramientas y funciones.",
+                        subtitle: "Refrigeración inteligente, simplificada",
+                        description: "El sistema inteligente de recomendación de refrigerante para espacios industriales y comerciales. Obtén soluciones de refrigeración personalizadas basadas en las medidas de tu espacio",
                         login: "Iniciar sesión",
                         register: "Crear cuenta",
                         terms: "Al continuar, aceptas nuestros {terms} y nuestra {privacy}.",
                         termsLink: "Términos del servicio",
                         privacyLink: "Política de privacidad"
                     }
+
 
 
                 },
@@ -561,15 +562,16 @@ i18n
 
                     // Écran de bienvenue
                     welcome: {
-                        title: "Bienvenue sur M-Coil",
-                        subtitle: "Votre compagnon personnel de productivité",
-                        description: "Rejoignez des milliers d'utilisateurs qui augmentent déjà leur productivité avec nos outils et fonctionnalités puissants.",
+                        title: "Bienvenue chez M-Coil",
+                        subtitle: "Refroidissement intelligent, simplifié",
+                        description: "Le système intelligent de recommandation de réfrigérant pour les espaces industriels et commerciaux. Obtenez des solutions de refroidissement personnalisées en fonction des dimensions de votre pièce",
                         login: "Se connecter",
                         register: "Créer un compte",
                         terms: "En continuant, vous acceptez nos {terms} et notre {privacy}.",
                         termsLink: "Conditions d'utilisation",
                         privacyLink: "Politique de confidentialité"
                     }
+
 
 
 
@@ -750,14 +752,15 @@ i18n
                     // Willkommensseite
                     welcome: {
                         title: "Willkommen bei M-Coil",
-                        subtitle: "Ihr persönlicher Produktivitätsbegleiter",
-                        description: "Schließen Sie sich Tausenden von Nutzern an, die ihre Produktivität bereits mit unseren leistungsstarken Tools steigern.",
+                        subtitle: "Intelligente Kühlung leicht gemacht",
+                        description: "Das intelligente System zur Kühlmittel-Empfehlung für industrielle und gewerbliche Räume. Erhalten Sie personalisierte Kühllösungen basierend auf Ihren Raummaßen",
                         login: "Anmelden",
                         register: "Konto erstellen",
                         terms: "Durch die Fortsetzung stimmen Sie unseren {terms} und unserer {privacy} zu.",
                         termsLink: "Nutzungsbedingungen",
                         privacyLink: "Datenschutzerklärung"
                     }
+
 
                 },
             },

@@ -7,6 +7,7 @@ import withReactContent from "sweetalert2-react-content";
 import logo from './../assets/logo.png';
 import './../assets/style.css';
 import './Login.css';
+import { useTranslation } from 'react-i18next';
 
 const MySwal = withReactContent(Swal);
 
@@ -45,12 +46,16 @@ const useAutoHideErrors = (errors, delay = 5000) => {
 };
 
 export default function Login() {
+  const { t } = useTranslation();
+
   const navigate = useNavigate();
   const [showSignup, setShowSignup] = useState(false);
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const [showSignupPassword, setShowSignupPassword] = useState(false);
   const [showWelcomeScreen, setShowWelcomeScreen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [forgotPasswordStep, setForgotPasswordStep] = useState(0);
+  const [resetEmail, setResetEmail] = useState('');
 
   const showToast = (icon, title) => {
     const Toast = MySwal.mixin({
@@ -74,20 +79,21 @@ export default function Login() {
   const showLogin = () => {
     setShowSignup(false);
     setShowWelcomeScreen(false);
+    setForgotPasswordStep(0);
   };
 
   const images = [
     {
       url: "https://images.unsplash.com/photo-1605152276897-4f618f831968",
-      text: `<a href="#" target="_blank">Precision cooling solutions for industrial spaces</a>`,
+      text: t('login.image1Text'),
     },
     {
       url: "https://images.pexels.com/photos/8972610/pexels-photo-8972610.jpeg",
-      text: `<a href="#" target="_blank">Optimize your cooling system with M-Coil technology</a>`,
+      text: t('login.image2Text'),
     },
     {
       url: "https://cdn.pixabay.com/photo/2017/06/20/22/14/man-2425121_1280.jpg",
-      text: `<a href="#" target="_blank">Expert coolant recommendations based on your space</a>`
+      text: t('login.image3Text')
     }
   ];
 
@@ -97,17 +103,28 @@ export default function Login() {
     register: loginRegister,
     handleSubmit: handleLoginSubmit,
     formState: { errors: loginErrors },
+    reset: resetLoginForm
   } = useForm();
 
   const {
     register: signupRegister,
     handleSubmit: handleSignupSubmit,
-    watch,
+    watch: watchSignup,
     formState: { errors: signupErrors },
+    reset: resetSignupForm
+  } = useForm();
+
+  const {
+    register: forgotPasswordRegister,
+    handleSubmit: handleForgotPasswordSubmit,
+    watch: watchForgotPassword,
+    formState: { errors: forgotPasswordErrors },
+    reset: resetForgotPasswordForm
   } = useForm();
 
   const { visibleErrors: visibleLoginErrors, fadingErrors: fadingLoginErrors } = useAutoHideErrors(loginErrors);
   const { visibleErrors: visibleSignupErrors, fadingErrors: fadingSignupErrors } = useAutoHideErrors(signupErrors);
+  const { visibleErrors: visibleForgotPasswordErrors, fadingErrors: fadingForgotPasswordErrors } = useAutoHideErrors(forgotPasswordErrors);
 
   // Check screen size on mount and resize
   useEffect(() => {
@@ -134,13 +151,12 @@ export default function Login() {
   const HandleLogin = async (data) => {
     try {
       console.log("Login data:", data);
-      showToast('success', 'Login successful!');
+      showToast('success', t('login.successMessage'));
       setTimeout(() => {
         navigate("/home");
       }, 1500);
     } catch (error) {
-      showToast('error', 'Invalid credentials!');
-
+      showToast('error', t('login.errorMessage'));
       console.error("Login error:", error);
     }
   };
@@ -148,14 +164,58 @@ export default function Login() {
   const HandleRegister = async (data) => {
     try {
       console.log("Registration data:", data);
-      showToast('success', 'Registration successful!');
+      showToast('success', t('register.successMessage'));
       setTimeout(() => {
         setShowSignup(false);
+        resetSignupForm();
       }, 1500);
     } catch (error) {
-      showToast('error', 'Registration failed!');
+      showToast('error', t('register.errorMessage'));
       console.error("Registration error:", error);
     }
+  };
+
+  const handleForgotPassword = async (data) => {
+    if (forgotPasswordStep === 1) {
+      // Step 1: Submit email
+      try {
+        console.log("Forgot password email:", data.email);
+        setResetEmail(data.email);
+        showToast('success', t('forgotPassword.codeSent'));
+        setForgotPasswordStep(2);
+        resetForgotPasswordForm();
+      } catch (error) {
+        showToast('error', t('forgotPassword.sendFailed'));
+        console.error("Forgot password error:", error);
+      }
+    } else if (forgotPasswordStep === 2) {
+      // Step 2: Verify code
+      try {
+        console.log("Verification code:", data.code);
+        showToast('success', t('forgotPassword.codeVerified'));
+        setForgotPasswordStep(3);
+        resetForgotPasswordForm();
+      } catch (error) {
+        showToast('error', t('forgotPassword.invalidCode'));
+        console.error("Code verification error:", error);
+      }
+    } else if (forgotPasswordStep === 3) {
+      // Step 3: Reset password
+      try {
+        console.log("New password for", resetEmail, ":", data.newPassword);
+        showToast('success', t('forgotPassword.resetSuccess'));
+        setForgotPasswordStep(0);
+        resetForgotPasswordForm();
+        setShowSignup(false);
+      } catch (error) {
+        showToast('error', t('forgotPassword.resetFailed'));
+        console.error("Password reset error:", error);
+      }
+    }
+  };
+
+  const handleResendCode = () => {
+    showToast('info', t('forgotPassword.newCodeSent'));
   };
 
   if (showWelcomeScreen) {
@@ -166,11 +226,10 @@ export default function Login() {
             <div className="welcome-text-section">
               <div className="welcome-text-container">
                 <img src={logo} alt="M-Coil Logo" className="welcome-logo" />
-                <h1 className="welcome-title">Welcome to</h1>
-                <h2 className="welcome-subtitle">M-Coil</h2>
+                <h1 className="welcome-title">{t('welcome.title')}</h1>
+                <h2 className="welcome-subtitle">{t('welcome.subtitle')}</h2>
                 <p className="welcome-description">
-                  The intelligent coolant recommendation system for industrial and commercial spaces.
-                  Get personalized cooling solutions based on your room measurements.
+                  {t('welcome.description')}
                 </p>
 
                 <div className="welcome-button-group">
@@ -178,27 +237,30 @@ export default function Login() {
                     onClick={() => {
                       setShowWelcomeScreen(false);
                       setShowSignup(false);
+                      setForgotPasswordStep(0);
                     }}
                     className="welcome-primary-btn"
                   >
-                    Log In
+                    {t('welcome.login')}
                   </button>
                   <button
                     onClick={() => {
                       setShowWelcomeScreen(false);
                       setShowSignup(true);
+                      setForgotPasswordStep(0);
                     }}
                     className="welcome-secondary-btn"
                   >
-                    Register
+                    {t('welcome.register')}
                   </button>
                 </div>
 
                 <div className="welcome-terms">
                   <p className="terms-text">
-                    By continuing, you agree to our{" "}
-                    <a href="#" className="terms-link">Terms of Service</a>{" "}
-                    and <a href="#" className="terms-link">Privacy Policy</a>
+                    {t('welcome.terms', {
+                      terms: `<a href="#" className="terms-link">${t('welcome.termsLink')}</a>`,
+                      privacy: `<a href="#" className="terms-link">${t('welcome.privacyLink')}</a>`
+                    })}
                   </p>
                 </div>
               </div>
@@ -211,7 +273,7 @@ export default function Login() {
               <div className="welcome-image-content">
                 <div className="welcome-image-buttons">
                   <button onClick={showLogin} className="welcome-image-btn">
-                    Log In
+                    {t('welcome.login')}
                   </button>
                   <button
                     className="welcome-image-btn"
@@ -220,7 +282,7 @@ export default function Login() {
                       setShowSignup(true);
                     }}
                   >
-                    Register
+                    {t('welcome.register')}
                   </button>
                 </div>
                 <div>
@@ -237,65 +299,19 @@ export default function Login() {
     );
   }
 
-  return (
-    <div className="login-container">
-      <div className="login-card">
-        {/* Mobile Header */}
-        <div className="mobile-header">
-          <button onClick={() => setShowWelcomeScreen(true)} className="mobile-back-btn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="back-icon"
-            >
-              <path d="m12 19-7-7 7-7" />
-              <path d="M19 12H5" />
-            </svg>
-            M-Coil
-          </button>
-          <div className="mobile-auth-buttons">
-            <button
-              className={`mobile-auth-btn ${!showSignup ? "active" : ""}`}
-              onClick={() => setShowSignup(false)}
-            >
-              Login
-            </button>
-            <button
-              className={`mobile-auth-btn ${showSignup ? "active" : ""}`}
-              onClick={() => setShowSignup(true)}
-            >
-              Register
-            </button>
-          </div>
-        </div>
-
-        {/* Main Content Area */}
-        <div className="main-content">
-          {/* Form Side */}
-          <div className="form-side">
-            {/* Logo */}
-            <div className="logo-container">
-              <img src={logo} alt="M-Coil Logo" className="auth-logo" />
-            </div>
-
-            {/* Desktop Back Button */}
-            <div className="desktop-back-btn-container">
-              <button
-                onClick={() => setShowWelcomeScreen(true)}
-                className="desktop-back-btn"
-                aria-label="Back to welcome screen"
-              >
+  // Forgot Password Screen
+  if (forgotPasswordStep > 0) {
+    return (
+      <div className="login-container">
+        <div className="login-card">
+          {/* Mobile Header */}
+          {isMobile && (
+            <div className="mobile-header">
+              <button onClick={() => setForgotPasswordStep(0)} className="mobile-back-btn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
+                  width="24"
+                  height="24"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -307,32 +323,340 @@ export default function Login() {
                   <path d="m12 19-7-7 7-7" />
                   <path d="M19 12H5" />
                 </svg>
-                Back
+                {t('common.back')}
+              </button>
+              <div className="mobile-auth-buttons">
+                <button className="mobile-auth-btn active">
+                  {t('forgotPassword.title')}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Main Content Area */}
+          <div className="main-content">
+            {/* Form Side */}
+            <div className="form-side">
+              {/* Logo */}
+              <div className="logo-container">
+                <img src={logo} alt="M-Coil Logo" className="auth-logo" />
+              </div>
+
+              {/* Desktop Back Button */}
+              {!isMobile && (
+                <div className="desktop-back-btn-container">
+                  <button
+                    onClick={() => setForgotPasswordStep(0)}
+                    className="desktop-back-btn"
+                    aria-label="Back to login"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="back-icon"
+                    >
+                      <path d="m12 19-7-7 7-7" />
+                      <path d="M19 12H5" />
+                    </svg>
+                    {t('forgotPassword.backToLogin')}
+                  </button>
+                </div>
+              )}
+
+              <div className="forgot-password-form-container">
+                <div className="form-content">
+                  <h1 className="form-title">
+                    {forgotPasswordStep === 1 && t('forgotPassword.title')}
+                    {forgotPasswordStep === 2 && t('forgotPassword.verifyTitle')}
+                    {forgotPasswordStep === 3 && t('forgotPassword.resetTitle')}
+                  </h1>
+
+                  <p className="form-subtitle text-center">
+                    {forgotPasswordStep === 1 && t('forgotPassword.enterEmail')}
+                    {forgotPasswordStep === 2 && t('forgotPassword.codeSent', { email: resetEmail })}
+                    {forgotPasswordStep === 3 && t('forgotPassword.createNewPassword')}
+                  </p>
+
+                  <form onSubmit={handleForgotPasswordSubmit(handleForgotPassword)} className="auth-form">
+                    {forgotPasswordStep === 1 && (
+                      <div className="form-group">
+                        <input
+                          type="email"
+                          placeholder={t('forgotPassword.emailPlaceholder')}
+                          className="form-input"
+                          {...forgotPasswordRegister("email", {
+                            required: t('validation.emailRequired'),
+                            pattern: {
+                              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                              message: t('validation.invalidEmail')
+                            }
+                          })}
+                        />
+                        {forgotPasswordErrors.email && visibleForgotPasswordErrors.email && (
+                          <p className={`form-error ${fadingForgotPasswordErrors.email ? 'fade-out' : ''}`}>
+                            {forgotPasswordErrors.email.message}
+                          </p>
+                        )}
+                      </div>
+                    )}
+
+                    {forgotPasswordStep === 2 && (
+                      <>
+                        <div className="form-group">
+                          <input
+                            type="text"
+                            placeholder={t('forgotPassword.codePlaceholder')}
+                            className="form-input"
+                            {...forgotPasswordRegister("code", {
+                              required: t('validation.codeRequired'),
+                              pattern: {
+                                value: /^\d{6}$/,
+                                message: t('validation.codeFormat')
+                              }
+                            })}
+                          />
+                          {forgotPasswordErrors.code && visibleForgotPasswordErrors.code && (
+                            <p className={`form-error ${fadingForgotPasswordErrors.code ? 'fade-out' : ''}`}>
+                              {forgotPasswordErrors.code.message}
+                            </p>
+                          )}
+                        </div>
+                        <div className="forgot-password-resend">
+                          <button
+                            type="button"
+                            onClick={handleResendCode}
+                            className="forgot-password-resend-link"
+                          >
+                            {t('forgotPassword.resendCode')}
+                          </button>
+                        </div>
+                      </>
+                    )}
+
+                    {forgotPasswordStep === 3 && (
+                      <>
+                        <div className="form-group">
+                          <div className="password-input-container">
+                            <input
+                              type={showLoginPassword ? "text" : "password"}
+                              placeholder={t('forgotPassword.newPasswordPlaceholder')}
+                              className="form-input"
+                              {...forgotPasswordRegister("newPassword", {
+                                required: t('validation.passwordRequired'),
+                                minLength: {
+                                  value: 8,
+                                  message: t('validation.passwordMinLength')
+                                },
+                                pattern: {
+                                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                                  message: t('validation.passwordComplexity')
+                                }
+                              })}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setShowLoginPassword(!showLoginPassword)}
+                              className="password-toggle"
+                            >
+                              {showLoginPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
+                          </div>
+                          {forgotPasswordErrors.newPassword && visibleForgotPasswordErrors.newPassword && (
+                            <p className={`form-error ${fadingForgotPasswordErrors.newPassword ? 'fade-out' : ''}`}>
+                              {forgotPasswordErrors.newPassword.message}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="form-group">
+                          <div className="password-input-container">
+                            <input
+                              type={showLoginPassword ? "text" : "password"}
+                              placeholder={t('forgotPassword.confirmPasswordPlaceholder')}
+                              className="form-input"
+                              {...forgotPasswordRegister("confirmPassword", {
+                                required: t('validation.confirmPasswordRequired'),
+                                validate: value =>
+                                  value === watchForgotPassword("newPassword") || t('validation.passwordsDontMatch')
+                              })}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setShowLoginPassword(!showLoginPassword)}
+                              className="password-toggle"
+                            >
+                              {showLoginPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
+                          </div>
+                          {forgotPasswordErrors.confirmPassword && visibleForgotPasswordErrors.confirmPassword && (
+                            <p className={`form-error ${fadingForgotPasswordErrors.confirmPassword ? 'fade-out' : ''}`}>
+                              {forgotPasswordErrors.confirmPassword.message}
+                            </p>
+                          )}
+                        </div>
+                      </>
+                    )}
+
+                    <button className="submit-btn" type="submit">
+                      {forgotPasswordStep === 1 && t('forgotPassword.sendCode')}
+                      {forgotPasswordStep === 2 && t('forgotPassword.verifyCode')}
+                      {forgotPasswordStep === 3 && t('forgotPassword.resetPassword')}
+                    </button>
+                  </form>
+
+                  <p className="auth-switch-text">
+                    {t('forgotPassword.rememberPassword')}{" "}
+                    <button
+                      className="auth-switch-link"
+                      onClick={() => setForgotPasswordStep(0)}
+                    >
+                      {t('common.login')}
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Image Side */}
+            {!isMobile && (
+              <div
+                className="image-side"
+                style={{ backgroundImage: `url(${images[currentImageIndex].url})` }}
+              >
+                <div className="image-content">
+                  <div className="image-buttons">
+                    <button onClick={showLogin} className="image-btn">
+                      {t('common.login')}
+                    </button>
+                    <button
+                      className="image-btn"
+                      onClick={() => setShowSignup(true)}
+                    >
+                      {t('common.register')}
+                    </button>
+                  </div>
+                  <div>
+                    <h2
+                      className="image-text"
+                      dangerouslySetInnerHTML={{ __html: images[currentImageIndex].text }}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="login-container">
+      <div className="login-card">
+        {/* Mobile Header */}
+        {isMobile && (
+          <div className="mobile-header">
+            <button onClick={() => setShowWelcomeScreen(true)} className="mobile-back-btn">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="back-icon"
+              >
+                <path d="m12 19-7-7 7-7" />
+                <path d="M19 12H5" />
+              </svg>
+              M-Coil
+            </button>
+            <div className="mobile-auth-buttons">
+              <button
+                className={`mobile-auth-btn ${!showSignup ? "active" : ""}`}
+                onClick={() => setShowSignup(false)}
+              >
+                {t('common.login')}
+              </button>
+              <button
+                className={`mobile-auth-btn ${showSignup ? "active" : ""}`}
+                onClick={() => setShowSignup(true)}
+              >
+                {t('common.register')}
               </button>
             </div>
+          </div>
+        )}
+
+        {/* Main Content Area */}
+        <div className="main-content">
+          {/* Form Side */}
+          <div className="form-side">
+            {/* Logo */}
+            <div className="logo-container">
+              <img src={logo} alt="M-Coil Logo" className="auth-logo" />
+            </div>
+
+            {/* Desktop Back Button */}
+            {!isMobile && (
+              <div className="desktop-back-btn-container">
+                <button
+                  onClick={() => setShowWelcomeScreen(true)}
+                  className="desktop-back-btn"
+                  aria-label="Back to welcome screen"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="back-icon"
+                  >
+                    <path d="m12 19-7-7 7-7" />
+                    <path d="M19 12H5" />
+                  </svg>
+                  {t('common.back')}
+                </button>
+              </div>
+            )}
 
             {/* Login Form */}
             {(!isMobile || !showSignup) && (
               <div className={`login-form-container ${showSignup ? "hidden" : ""}`}>
                 <div className="form-content">
-                  <h1 className="form-title text-center">Welcome Back!</h1>
-                  <p className="form-subtitle text-center">Personalized coolant insights</p>
+                  <h1 className="form-title text-center">{t('login.title')}</h1>
+                  <p className="form-subtitle text-center">{t('login.subtitle')}</p>
 
                   <button
                     className="social-login-btn"
-                    onClick={() => showToast('info', 'Google login coming soon!')}
+                    onClick={() => showToast('info', t('login.googleComingSoon'))}
                   >
                     <img
                       src="https://www.svgrepo.com/show/355037/google.svg"
                       alt="Google Icon"
                       className="social-icon"
                     />
-                    Log in with Google
+                    {t('login.googleLogin')}
                   </button>
 
                   <div className="divider">
                     <div className="divider-line"></div>
-                    <span className="divider-text">or</span>
+                    <span className="divider-text">{t('common.or')}</span>
                     <div className="divider-line"></div>
                   </div>
 
@@ -340,9 +664,9 @@ export default function Login() {
                     <div className="form-group">
                       <input
                         type="text"
-                        placeholder="Your username or email"
+                        placeholder={t('login.usernamePlaceholder')}
                         className="form-input"
-                        {...loginRegister("identifier", { required: "Username or email is required" })}
+                        {...loginRegister("identifier", { required: t('validation.usernameRequired') })}
                       />
                       {loginErrors.identifier && visibleLoginErrors.identifier && (
                         <p className={`form-error ${fadingLoginErrors.identifier ? 'fade-out' : ''}`}>
@@ -355,13 +679,13 @@ export default function Login() {
                       <div className="password-input-container">
                         <input
                           type={showLoginPassword ? "text" : "password"}
-                          placeholder="Password"
+                          placeholder={t('login.passwordPlaceholder')}
                           className="form-input"
                           {...loginRegister("password", {
-                            required: "Password is required",
+                            required: t('validation.passwordRequired'),
                             minLength: {
                               value: 6,
-                              message: "Password must be at least 6 characters"
+                              message: t('validation.passwordMinLength')
                             }
                           })}
                         />
@@ -386,46 +710,25 @@ export default function Login() {
                         className="forgot-password-link"
                         onClick={(e) => {
                           e.preventDefault();
-                          MySwal.fire({
-                            title: 'Forgot Password?',
-                            text: 'Enter your email to reset your password',
-                            input: 'email',
-                            inputPlaceholder: 'Your email address',
-                            showCancelButton: true,
-                            confirmButtonText: 'Reset Password',
-                            showLoaderOnConfirm: true,
-                            preConfirm: (email) => {
-                              return new Promise((resolve) => {
-                                setTimeout(() => {
-                                  if (email) {
-                                    showToast('success', 'Password reset link sent!');
-                                  } else {
-                                    Swal.showValidationMessage('Please enter your email');
-                                  }
-                                  resolve();
-                                }, 1500);
-                              });
-                            },
-                            allowOutsideClick: false
-                          });
+                          setForgotPasswordStep(1);
                         }}
                       >
-                        Forgot password?
+                        {t('login.forgotPassword')}
                       </a>
                     </div>
 
                     <button className="submit-btn" type="submit">
-                      Log In
+                      {t('common.login')}
                     </button>
                   </form>
 
                   <p className="auth-switch-text">
-                    Don't have an account?{" "}
+                    {t('login.noAccount')}{" "}
                     <button
                       className="auth-switch-link"
                       onClick={() => setShowSignup(true)}
                     >
-                      Register
+                      {t('common.register')}
                     </button>
                   </p>
                 </div>
@@ -436,24 +739,24 @@ export default function Login() {
             {(!isMobile || showSignup) && (
               <div className={`signup-form-container ${showSignup ? "visible" : "hidden"}`}>
                 <div className="form-content">
-                  <h1 className="form-title">Create M-Coil Account</h1>
-                  <p className="form-subtitle text-center">Get your coolant recommendations</p>
+                  <h1 className="form-title">{t('register.title')}</h1>
+                  <p className="form-subtitle text-center">{t('register.subtitle')}</p>
 
                   <button
                     className="social-login-btn"
-                    onClick={() => showToast('info', 'Google signup coming soon!')}
+                    onClick={() => showToast('info', t('register.googleComingSoon'))}
                   >
                     <img
                       src="https://www.svgrepo.com/show/355037/google.svg"
                       alt="Google Icon"
                       className="social-icon"
                     />
-                    Sign up with Google
+                    {t('register.googleSignup')}
                   </button>
 
                   <div className="divider">
                     <div className="divider-line"></div>
-                    <span className="divider-text">or</span>
+                    <span className="divider-text">{t('common.or')}</span>
                     <div className="divider-line"></div>
                   </div>
 
@@ -461,13 +764,13 @@ export default function Login() {
                     <div className="form-group">
                       <input
                         type="text"
-                        placeholder="Username"
+                        placeholder={t('register.usernamePlaceholder')}
                         className="form-input"
                         {...signupRegister("username", {
-                          required: "Username is required",
+                          required: t('validation.usernameRequired'),
                           minLength: {
                             value: 3,
-                            message: "Username must be at least 3 characters"
+                            message: t('validation.usernameMinLength')
                           }
                         })}
                       />
@@ -481,13 +784,13 @@ export default function Login() {
                     <div className="form-group">
                       <input
                         type="email"
-                        placeholder="Email"
+                        placeholder={t('register.emailPlaceholder')}
                         className="form-input"
                         {...signupRegister("email", {
-                          required: "Email is required",
+                          required: t('validation.emailRequired'),
                           pattern: {
                             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            message: "Invalid email address"
+                            message: t('validation.invalidEmail')
                           }
                         })}
                       />
@@ -502,17 +805,17 @@ export default function Login() {
                       <div className="password-input-container">
                         <input
                           type={showSignupPassword ? "text" : "password"}
-                          placeholder="Password"
+                          placeholder={t('register.passwordPlaceholder')}
                           className="form-input"
                           {...signupRegister("password", {
-                            required: "Password is required",
+                            required: t('validation.passwordRequired'),
                             minLength: {
                               value: 8,
-                              message: "Password must be at least 8 characters"
+                              message: t('validation.passwordMinLength')
                             },
                             pattern: {
                               value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-                              message: "Password must contain at least one uppercase, one lowercase, one number and one special character"
+                              message: t('validation.passwordComplexity')
                             }
                           })}
                         />
@@ -535,12 +838,12 @@ export default function Login() {
                       <div className="password-input-container">
                         <input
                           type={showSignupPassword ? "text" : "password"}
-                          placeholder="Re-enter Password"
+                          placeholder={t('register.confirmPasswordPlaceholder')}
                           className="form-input"
                           {...signupRegister("confirmPassword", {
-                            required: "Please confirm your password",
+                            required: t('validation.confirmPasswordRequired'),
                             validate: value =>
-                              value === watch("password") || "Passwords do not match"
+                              value === watchSignup("password") || t('validation.passwordsDontMatch')
                           })}
                         />
                         <button
@@ -563,11 +866,14 @@ export default function Login() {
                         type="checkbox"
                         id="terms-check"
                         {...signupRegister("acceptTerms", {
-                          required: "You must accept the terms and conditions"
+                          required: t('validation.acceptTerms')
                         })}
                       />
                       <label htmlFor="terms-check">
-                        I agree to the <a href="#" className="terms-link">Terms of Service</a> and <a href="#" className="terms-link">Privacy Policy</a>
+                        {t('register.agreeTerms', {
+                          terms: `<a href="#" className="terms-link">${t('register.termsLink')}</a>`,
+                          privacy: `<a href="#" className="terms-link">${t('register.privacyLink')}</a>`
+                        })}
                       </label>
                       {signupErrors.acceptTerms && visibleSignupErrors.acceptTerms && (
                         <p className={`form-error ${fadingSignupErrors.acceptTerms ? 'fade-out' : ''}`}>
@@ -577,17 +883,17 @@ export default function Login() {
                     </div>
 
                     <button className="submit-btn" type="submit">
-                      Create Account
+                      {t('register.createAccount')}
                     </button>
                   </form>
 
                   <p className="auth-switch-text">
-                    Already have an account?{" "}
+                    {t('register.haveAccount')}{" "}
                     <button
                       className="auth-switch-link"
                       onClick={() => setShowSignup(false)}
                     >
-                      Log in
+                      {t('common.login')}
                     </button>
                   </p>
                 </div>
@@ -604,13 +910,13 @@ export default function Login() {
               <div className="image-content">
                 <div className="image-buttons">
                   <button onClick={showLogin} className="image-btn">
-                    Log In
+                    {t('common.login')}
                   </button>
                   <button
                     className="image-btn"
                     onClick={() => setShowSignup(true)}
                   >
-                    Register
+                    {t('common.register')}
                   </button>
                 </div>
                 <div>

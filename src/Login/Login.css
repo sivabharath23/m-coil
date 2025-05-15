@@ -885,3 +885,37 @@ body {
   font-size: 0.8rem;
   margin-top: 0.25rem;
 }
+
+/* Forgot Password Specific Styles */
+.forgot-password-form-container {
+  padding: 1rem;
+  max-width: 400px;
+
+}
+
+.forgot-password-resend {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.forgot-password-resend-link {
+  background: none;
+  border: none;
+  color: #4f46e5;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.forgot-password-resend-link:hover {
+  text-decoration: underline;
+}
+
+/* Form Instruction Text */
+.form-instructions {
+  color: #666;
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}

@@ -99,6 +99,103 @@ i18n
                     downloadReadyText: "Your PDF with {{template}} template is ready to download.",
                     download: "Download",
 
+                    // Login page translations
+                    login: {
+                        title: "Welcome Back!",
+                        subtitle: "Personalized coolant insights",
+                        googleLogin: "Log in with Google",
+                        googleComingSoon: "Google login coming soon!",
+                        usernamePlaceholder: "Your username or email",
+                        passwordPlaceholder: "Password",
+                        forgotPassword: "Forgot password?",
+                        noAccount: "Don't have an account?",
+                        successMessage: "Login successful!",
+                        errorMessage: "Invalid credentials!",
+                        image1Text: '<a href="#" target="_blank">Precision cooling solutions for industrial spaces</a>',
+                        image2Text: '<a href="#" target="_blank">Optimize your cooling system with M-Coil technology</a>',
+                        image3Text: '<a href="#" target="_blank">Expert coolant recommendations based on your space</a>'
+                    },
+
+                    // Registration page translations
+                    register: {
+                        title: "Create M-Coil Account",
+                        subtitle: "Get your coolant recommendations",
+                        googleSignup: "Sign up with Google",
+                        googleComingSoon: "Google signup coming soon!",
+                        usernamePlaceholder: "Username",
+                        emailPlaceholder: "Email",
+                        passwordPlaceholder: "Password",
+                        confirmPasswordPlaceholder: "Re-enter Password",
+                        createAccount: "Create Account",
+                        haveAccount: "Already have an account?",
+                        agreeTerms: "I agree to the {terms} and {privacy}",
+                        termsLink: "Terms of Service",
+                        privacyLink: "Privacy Policy",
+                        successMessage: "Registration successful!",
+                        errorMessage: "Registration failed!"
+                    },
+
+                    // Forgot password translations
+                    forgotPassword: {
+                        title: "Forgot Password",
+                        verifyTitle: "Verify Your Email",
+                        resetTitle: "Reset Your Password",
+                        enterEmail: "Enter your email to receive a reset code",
+                        codeSent: "We sent a code to {email}",
+                        createNewPassword: "Create a new password for your account",
+                        codePlaceholder: "Enter 6-digit code",
+                        newPasswordPlaceholder: "New Password",
+                        confirmPasswordPlaceholder: "Confirm New Password",
+                        sendCode: "Send Reset Code",
+                        verifyCode: "Verify Code",
+                        resetPassword: "Reset Password",
+                        resendCode: "Resend Code",
+                        newCodeSent: "New code sent to your email!",
+                        rememberPassword: "Remember your password?",
+                        backToLogin: "Back to Login",
+                        codeVerified: "Code verified!",
+                        resetSuccess: "Password reset successfully!",
+                        sendFailed: "Failed to send reset code",
+                        invalidCode: "Invalid verification code",
+                        resetFailed: "Failed to reset password"
+                    },
+
+                    // Common translations
+                    common: {
+                        back: "Back",
+                        login: "Login",
+                        register: "Register",
+                        or: "or"
+                    },
+
+                    // Validation messages
+                    validation: {
+                        usernameRequired: "Username or email is required",
+                        emailRequired: "Email is required",
+                        invalidEmail: "Invalid email address",
+                        passwordRequired: "Password is required",
+                        passwordMinLength: "Password must be at least {{value}} characters",
+                        passwordComplexity: "Password must contain at least one uppercase, one lowercase, one number and one special character",
+                        confirmPasswordRequired: "Please confirm your password",
+                        passwordsDontMatch: "Passwords do not match",
+                        codeRequired: "Verification code is required",
+                        codeFormat: "Code must be 6 digits",
+                        acceptTerms: "You must accept the terms and conditions",
+                        usernameMinLength: "Username must be at least {{value}} characters"
+                    },
+
+                    //Welcom
+                    welcome: {
+                        title: "Welcome to M-Coil",
+                        subtitle: "Your personal productivity companion",
+                        description: "Join thousands of users who are already boosting their productivity with our powerful tools and features.",
+                        login: "Log In",
+                        register: "Create Account",
+                        terms: "By continuing, you agree to our {terms} and {privacy}.",
+                        termsLink: "Terms of Service",
+                        privacyLink: "Privacy Policy"
+                    }
+
 
                 },
             },
@@ -190,6 +287,104 @@ i18n
                     downloadReadyText: "Tu PDF con la plantilla {{template}} está listo para descargar.",
                     download: "Descargar",
 
+                    // Página de inicio de sesión
+                    login: {
+                        title: "¡Bienvenido de nuevo!",
+                        subtitle: "Información personalizada sobre refrigerantes",
+                        googleLogin: "Iniciar sesión con Google",
+                        googleComingSoon: "¡Inicio de sesión con Google próximamente!",
+                        usernamePlaceholder: "Tu nombre de usuario o correo electrónico",
+                        passwordPlaceholder: "Contraseña",
+                        forgotPassword: "¿Olvidaste tu contraseña?",
+                        noAccount: "¿No tienes una cuenta?",
+                        successMessage: "¡Inicio de sesión exitoso!",
+                        errorMessage: "¡Credenciales inválidas!",
+                        image1Text: '<a href="#" target="_blank">Soluciones de refrigeración de precisión para espacios industriales</a>',
+                        image2Text: '<a href="#" target="_blank">Optimiza tu sistema de refrigeración con la tecnología M-Coil</a>',
+                        image3Text: '<a href="#" target="_blank">Recomendaciones expertas de refrigerantes según tu espacio</a>'
+                    },
+
+                    // Página de registro
+                    register: {
+                        title: "Crea una cuenta M-Coil",
+                        subtitle: "Obtén tus recomendaciones de refrigerante",
+                        googleSignup: "Registrarse con Google",
+                        googleComingSoon: "¡Registro con Google próximamente!",
+                        usernamePlaceholder: "Nombre de usuario",
+                        emailPlaceholder: "Correo electrónico",
+                        passwordPlaceholder: "Contraseña",
+                        confirmPasswordPlaceholder: "Reingresa la contraseña",
+                        createAccount: "Crear cuenta",
+                        haveAccount: "¿Ya tienes una cuenta?",
+                        agreeTerms: "Acepto los {terms} y la {privacy}",
+                        termsLink: "Términos del servicio",
+                        privacyLink: "Política de privacidad",
+                        successMessage: "¡Registro exitoso!",
+                        errorMessage: "¡Error en el registro!"
+                    },
+
+                    // Página de recuperación de contraseña
+                    forgotPassword: {
+                        title: "Olvidé mi contraseña",
+                        verifyTitle: "Verifica tu correo electrónico",
+                        resetTitle: "Restablece tu contraseña",
+                        enterEmail: "Ingresa tu correo electrónico para recibir un código",
+                        codeSent: "Hemos enviado un código a {email}",
+                        createNewPassword: "Crea una nueva contraseña para tu cuenta",
+                        codePlaceholder: "Ingresa el código de 6 dígitos",
+                        newPasswordPlaceholder: "Nueva contraseña",
+                        confirmPasswordPlaceholder: "Confirmar nueva contraseña",
+                        sendCode: "Enviar código de restablecimiento",
+                        verifyCode: "Verificar código",
+                        resetPassword: "Restablecer contraseña",
+                        resendCode: "Reenviar código",
+                        newCodeSent: "¡Nuevo código enviado a tu correo electrónico!",
+                        rememberPassword: "¿Recordaste tu contraseña?",
+                        backToLogin: "Volver al inicio de sesión",
+                        codeVerified: "¡Código verificado!",
+                        resetSuccess: "¡Contraseña restablecida exitosamente!",
+                        sendFailed: "No se pudo enviar el código",
+                        invalidCode: "Código de verificación inválido",
+                        resetFailed: "Error al restablecer la contraseña"
+                    },
+
+                    // Traducciones comunes
+                    common: {
+                        back: "Atrás",
+                        login: "Iniciar sesión",
+                        register: "Registrarse",
+                        or: "o"
+                    },
+
+                    // Mensajes de validación
+                    validation: {
+                        usernameRequired: "Se requiere nombre de usuario o correo electrónico",
+                        emailRequired: "Se requiere correo electrónico",
+                        invalidEmail: "Dirección de correo electrónico inválida",
+                        passwordRequired: "Se requiere contraseña",
+                        passwordMinLength: "La contraseña debe tener al menos {{value}} caracteres",
+                        passwordComplexity: "La contraseña debe contener al menos una letra mayúscula, una minúscula, un número y un carácter especial",
+                        confirmPasswordRequired: "Por favor, confirma tu contraseña",
+                        passwordsDontMatch: "Las contraseñas no coinciden",
+                        codeRequired: "Se requiere el código de verificación",
+                        codeFormat: "El código debe tener 6 dígitos",
+                        acceptTerms: "Debes aceptar los términos y condiciones",
+                        usernameMinLength: "El nombre de usuario debe tener al menos {{value}} caracteres"
+                    },
+
+                    // Pantalla de bienvenida
+                    welcome: {
+                        title: "Bienvenido a M-Coil",
+                        subtitle: "Tu compañero personal de productividad",
+                        description: "Únete a miles de usuarios que ya están mejorando su productividad con nuestras poderosas herramientas y funciones.",
+                        login: "Iniciar sesión",
+                        register: "Crear cuenta",
+                        terms: "Al continuar, aceptas nuestros {terms} y nuestra {privacy}.",
+                        termsLink: "Términos del servicio",
+                        privacyLink: "Política de privacidad"
+                    }
+
+
                 },
             },
             fr: {
@@ -278,6 +473,104 @@ i18n
                     downloadReady: "Téléchargement prêt !",
                     downloadReadyText: "Votre PDF avec le modèle {{template}} est prêt à être téléchargé.",
                     download: "Télécharger",
+
+                    // Page de connexion
+                    login: {
+                        title: "Bon retour !",
+                        subtitle: "Informations personnalisées sur les fluides de refroidissement",
+                        googleLogin: "Se connecter avec Google",
+                        googleComingSoon: "Connexion Google bientôt disponible !",
+                        usernamePlaceholder: "Votre nom d'utilisateur ou e-mail",
+                        passwordPlaceholder: "Mot de passe",
+                        forgotPassword: "Mot de passe oublié ?",
+                        noAccount: "Vous n'avez pas de compte ?",
+                        successMessage: "Connexion réussie !",
+                        errorMessage: "Identifiants invalides !",
+                        image1Text: '<a href="#" target="_blank">Solutions de refroidissement de précision pour les espaces industriels</a>',
+                        image2Text: '<a href="#" target="_blank">Optimisez votre système de refroidissement avec la technologie M-Coil</a>',
+                        image3Text: '<a href="#" target="_blank">Recommandations expertes en fluides de refroidissement selon votre espace</a>'
+                    },
+
+                    // Page d'inscription
+                    register: {
+                        title: "Créer un compte M-Coil",
+                        subtitle: "Obtenez vos recommandations de fluide de refroidissement",
+                        googleSignup: "S'inscrire avec Google",
+                        googleComingSoon: "Inscription Google bientôt disponible !",
+                        usernamePlaceholder: "Nom d'utilisateur",
+                        emailPlaceholder: "E-mail",
+                        passwordPlaceholder: "Mot de passe",
+                        confirmPasswordPlaceholder: "Confirmer le mot de passe",
+                        createAccount: "Créer un compte",
+                        haveAccount: "Vous avez déjà un compte ?",
+                        agreeTerms: "J'accepte les {terms} et la {privacy}",
+                        termsLink: "Conditions d'utilisation",
+                        privacyLink: "Politique de confidentialité",
+                        successMessage: "Inscription réussie !",
+                        errorMessage: "Échec de l'inscription !"
+                    },
+
+                    // Page de réinitialisation du mot de passe
+                    forgotPassword: {
+                        title: "Mot de passe oublié",
+                        verifyTitle: "Vérifiez votre e-mail",
+                        resetTitle: "Réinitialisez votre mot de passe",
+                        enterEmail: "Entrez votre e-mail pour recevoir un code de réinitialisation",
+                        codeSent: "Nous avons envoyé un code à {email}",
+                        createNewPassword: "Créez un nouveau mot de passe pour votre compte",
+                        codePlaceholder: "Entrez le code à 6 chiffres",
+                        newPasswordPlaceholder: "Nouveau mot de passe",
+                        confirmPasswordPlaceholder: "Confirmer le nouveau mot de passe",
+                        sendCode: "Envoyer le code de réinitialisation",
+                        verifyCode: "Vérifier le code",
+                        resetPassword: "Réinitialiser le mot de passe",
+                        resendCode: "Renvoyer le code",
+                        newCodeSent: "Nouveau code envoyé à votre e-mail !",
+                        rememberPassword: "Vous vous souvenez de votre mot de passe ?",
+                        backToLogin: "Retour à la connexion",
+                        codeVerified: "Code vérifié !",
+                        resetSuccess: "Mot de passe réinitialisé avec succès !",
+                        sendFailed: "Échec de l'envoi du code de réinitialisation",
+                        invalidCode: "Code de vérification invalide",
+                        resetFailed: "Échec de la réinitialisation du mot de passe"
+                    },
+
+                    // Traductions communes
+                    common: {
+                        back: "Retour",
+                        login: "Se connecter",
+                        register: "S'inscrire",
+                        or: "ou"
+                    },
+
+                    // Messages de validation
+                    validation: {
+                        usernameRequired: "Le nom d'utilisateur ou l'e-mail est requis",
+                        emailRequired: "L'e-mail est requis",
+                        invalidEmail: "Adresse e-mail invalide",
+                        passwordRequired: "Le mot de passe est requis",
+                        passwordMinLength: "Le mot de passe doit comporter au moins {{value}} caractères",
+                        passwordComplexity: "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial",
+                        confirmPasswordRequired: "Veuillez confirmer votre mot de passe",
+                        passwordsDontMatch: "Les mots de passe ne correspondent pas",
+                        codeRequired: "Le code de vérification est requis",
+                        codeFormat: "Le code doit comporter 6 chiffres",
+                        acceptTerms: "Vous devez accepter les termes et conditions",
+                        usernameMinLength: "Le nom d'utilisateur doit comporter au moins {{value}} caractères"
+                    },
+
+                    // Écran de bienvenue
+                    welcome: {
+                        title: "Bienvenue sur M-Coil",
+                        subtitle: "Votre compagnon personnel de productivité",
+                        description: "Rejoignez des milliers d'utilisateurs qui augmentent déjà leur productivité avec nos outils et fonctionnalités puissants.",
+                        login: "Se connecter",
+                        register: "Créer un compte",
+                        terms: "En continuant, vous acceptez nos {terms} et notre {privacy}.",
+                        termsLink: "Conditions d'utilisation",
+                        privacyLink: "Politique de confidentialité"
+                    }
+
 
 
                 },
@@ -368,6 +661,104 @@ i18n
                     downloadReady: "Download bereit!",
                     downloadReadyText: "Ihr PDF mit der Vorlage {{template}} ist bereit zum Herunterladen.",
                     download: "Herunterladen",
+
+                    // Anmeldeseite
+                    login: {
+                        title: "Willkommen zurück!",
+                        subtitle: "Personalisierte Kühlmittel-Einblicke",
+                        googleLogin: "Mit Google anmelden",
+                        googleComingSoon: "Google-Anmeldung bald verfügbar!",
+                        usernamePlaceholder: "Benutzername oder E-Mail",
+                        passwordPlaceholder: "Passwort",
+                        forgotPassword: "Passwort vergessen?",
+                        noAccount: "Noch kein Konto?",
+                        successMessage: "Anmeldung erfolgreich!",
+                        errorMessage: "Ungültige Zugangsdaten!",
+                        image1Text: '<a href="#" target="_blank">Präzise Kühllösungen für industrielle Räume</a>',
+                        image2Text: '<a href="#" target="_blank">Optimieren Sie Ihr Kühlsystem mit M-Coil-Technologie</a>',
+                        image3Text: '<a href="#" target="_blank">Expertenempfehlungen für Kühlmittel basierend auf Ihrem Raum</a>'
+                    },
+
+                    // Registrierungsseite
+                    register: {
+                        title: "M-Coil-Konto erstellen",
+                        subtitle: "Erhalten Sie Ihre Kühlmittelempfehlungen",
+                        googleSignup: "Mit Google registrieren",
+                        googleComingSoon: "Google-Registrierung bald verfügbar!",
+                        usernamePlaceholder: "Benutzername",
+                        emailPlaceholder: "E-Mail",
+                        passwordPlaceholder: "Passwort",
+                        confirmPasswordPlaceholder: "Passwort wiederholen",
+                        createAccount: "Konto erstellen",
+                        haveAccount: "Bereits ein Konto?",
+                        agreeTerms: "Ich stimme den {terms} und der {privacy} zu",
+                        termsLink: "Nutzungsbedingungen",
+                        privacyLink: "Datenschutzerklärung",
+                        successMessage: "Registrierung erfolgreich!",
+                        errorMessage: "Registrierung fehlgeschlagen!"
+                    },
+
+                    // Passwort vergessen
+                    forgotPassword: {
+                        title: "Passwort vergessen",
+                        verifyTitle: "E-Mail bestätigen",
+                        resetTitle: "Passwort zurücksetzen",
+                        enterEmail: "E-Mail-Adresse eingeben, um einen Code zu erhalten",
+                        codeSent: "Ein Code wurde an {email} gesendet",
+                        createNewPassword: "Neues Passwort für Ihr Konto erstellen",
+                        codePlaceholder: "6-stelligen Code eingeben",
+                        newPasswordPlaceholder: "Neues Passwort",
+                        confirmPasswordPlaceholder: "Neues Passwort bestätigen",
+                        sendCode: "Code senden",
+                        verifyCode: "Code überprüfen",
+                        resetPassword: "Passwort zurücksetzen",
+                        resendCode: "Code erneut senden",
+                        newCodeSent: "Neuer Code an Ihre E-Mail gesendet!",
+                        rememberPassword: "Passwort wieder eingefallen?",
+                        backToLogin: "Zurück zur Anmeldung",
+                        codeVerified: "Code erfolgreich verifiziert!",
+                        resetSuccess: "Passwort erfolgreich zurückgesetzt!",
+                        sendFailed: "Senden des Codes fehlgeschlagen",
+                        invalidCode: "Ungültiger Bestätigungscode",
+                        resetFailed: "Passwort konnte nicht zurückgesetzt werden"
+                    },
+
+                    // Allgemeine Texte
+                    common: {
+                        back: "Zurück",
+                        login: "Anmelden",
+                        register: "Registrieren",
+                        or: "oder"
+                    },
+
+                    // Validierungsnachrichten
+                    validation: {
+                        usernameRequired: "Benutzername oder E-Mail ist erforderlich",
+                        emailRequired: "E-Mail ist erforderlich",
+                        invalidEmail: "Ungültige E-Mail-Adresse",
+                        passwordRequired: "Passwort ist erforderlich",
+                        passwordMinLength: "Passwort muss mindestens {{value}} Zeichen lang sein",
+                        passwordComplexity: "Passwort muss mindestens einen Großbuchstaben, einen Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten",
+                        confirmPasswordRequired: "Bitte bestätigen Sie Ihr Passwort",
+                        passwordsDontMatch: "Passwörter stimmen nicht überein",
+                        codeRequired: "Bestätigungscode ist erforderlich",
+                        codeFormat: "Code muss 6-stellig sein",
+                        acceptTerms: "Sie müssen die Bedingungen akzeptieren",
+                        usernameMinLength: "Benutzername muss mindestens {{value}} Zeichen lang sein"
+                    },
+
+                    // Willkommensseite
+                    welcome: {
+                        title: "Willkommen bei M-Coil",
+                        subtitle: "Ihr persönlicher Produktivitätsbegleiter",
+                        description: "Schließen Sie sich Tausenden von Nutzern an, die ihre Produktivität bereits mit unseren leistungsstarken Tools steigern.",
+                        login: "Anmelden",
+                        register: "Konto erstellen",
+                        terms: "Durch die Fortsetzung stimmen Sie unseren {terms} und unserer {privacy} zu.",
+                        termsLink: "Nutzungsbedingungen",
+                        privacyLink: "Datenschutzerklärung"
+                    }
+
                 },
             },
         },

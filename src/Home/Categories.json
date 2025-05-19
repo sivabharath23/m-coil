@@ -1,5 +1,13 @@
 [
     {
+        "name": "Condensing Unit",
+        "backgroundImage": "/assets/images/condensing-unit.webp"
+    },
+    {
+        "name": "Selection Tool",
+        "backgroundImage": "/assets/images/selection-tool.webp"
+    },
+    {
         "name": "Condenser Coils",
         "backgroundImage": "/assets/images/condesor-coil.webp"
     },

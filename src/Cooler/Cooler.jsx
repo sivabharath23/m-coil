@@ -271,8 +271,10 @@ const Cooler = () => {
                                     {sectionTitle === 'Humidity' && <FaTint className="section-icon" />}
                                     {sectionTitle === 'Room' && <FaHome className="section-icon" />}
                                     {sectionTitle === 'Environment' && <FaMountain className="section-icon" />}
+                                    {sectionTitle !== 'Temperature' && sectionTitle !== 'Humidity' && sectionTitle !== 'Room' && sectionTitle !== 'Environment' && <FaSnowflake className="section-icon" />}
                                     <span>{sectionTitle}</span>
                                 </h3>
+
 
                                 {sectionFields.map(({ name, type, options, min, max, step, unit }) => {
                                     const label = name

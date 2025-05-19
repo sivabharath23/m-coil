@@ -1,4 +1,116 @@
 {
+    "Condensing Unit": [
+        {
+            "name": "evaporatorTemperature",
+            "type": "number",
+            "label": "Evaporator Temperature @DT1 (°C)",
+            "default": 6,
+            "min": -40,
+            "max": 20,
+            "section": "Cooling Parameters"
+        },
+        {
+            "name": "condensingTemperature",
+            "type": "number",
+            "label": "Condensing Temperature (°C)",
+            "default": 50,
+            "min": 10,
+            "max": 60,
+            "section": "Cooling Parameters"
+        },
+        {
+            "name": "refrigerant",
+            "type": "select(button)",
+            "label": "Refrigerant",
+            "options": [
+                {
+                    "value": "R404a",
+                    "label": "R404a"
+                },
+                {
+                    "value": "R134a",
+                    "label": "R134a"
+                },
+                {
+                    "value": "R22",
+                    "label": "R22"
+                }
+            ],
+            "default": "R404a",
+            "section": "Cooling Parameters"
+        }
+    ],
+    "Selection Tool": [
+        {
+            "name": "coolingCapacity",
+            "type": "number",
+            "label": "Cooling Capacity in kW",
+            "default": 100,
+            "min": 1,
+            "max": 1000,
+            "section": "Cooling Parameters"
+        },
+        {
+            "name": "roomTemperature",
+            "type": "number",
+            "label": "Room Temperature (°C)",
+            "default": 4,
+            "min": -30,
+            "max": 50,
+            "section": "Cooling Parameters"
+        },
+        {
+            "name": "dt1",
+            "type": "number",
+            "label": "DT1",
+            "default": 8,
+            "min": 1,
+            "max": 30,
+            "section": "Cooling Parameters"
+        },
+        {
+            "name": "refrigerant",
+            "type": "select(button)",
+            "label": "Refrigerant",
+            "options": [
+                {
+                    "value": "R134a",
+                    "label": "R134a"
+                },
+                {
+                    "value": "R404a",
+                    "label": "R404a"
+                },
+                {
+                    "value": "R22",
+                    "label": "R22"
+                }
+            ],
+            "default": "R134a",
+            "section": "Cooling Parameters"
+        },
+        {
+            "name": "finSpacing",
+            "type": "select(button)",
+            "label": "Fin Spacing",
+            "options": [
+                {
+                    "value": "4-6 mm",
+                    "label": "4-6 mm"
+                },
+                {
+                    "value": "6-8 mm",
+                    "label": "6-8 mm"
+                },
+                {
+                    "value": "8-10 mm",
+                    "label": "8-10 mm"
+                }
+            ],
+            "default": "4-6 mm",
+            "section": "Cooling Parameters"
+        }
+    ],
     "Condenser Coils": [
         {
             "name": "capacity",

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import categoriesData from './Categories.json';
 import { IoMdOptions } from 'react-icons/io';
 import logo from './../assets/logo.png';
-import { useTranslation } from 'react-i18next'; // Importing the useTranslation hook
+import { useTranslation } from 'react-i18next';
 
 const getIconForCategory = (categoryName) => {
     switch (categoryName) {

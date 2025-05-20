@@ -18,7 +18,6 @@ import fieldsData from './fieldsData.json';
 
 const Cooler = () => {
     const { t } = useTranslation();
-
     const { type } = useParams();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [activeTab, setActiveTab] = useState('search');
@@ -49,91 +48,6 @@ const Cooler = () => {
 
     };
 
-    // Comprehensive cooling calculation function
-    const calculateCoolingRequirements = (inputs) => {
-        // Extract all input values with defaults
-        const {
-            roomTemperature = 30,      // °C
-            targetTemperature = 24,    // °C
-            roomArea = 20,             // m²
-            roomHeight = 3,            // m
-            humidity = 50,             // %
-            heatSources = 0,           // kW
-            insulationQuality = 'medium', // low/medium/high
-            roomOccupancy = 2,         // people
-            sunlightExposure = 'medium' // low/medium/high
-        } = inputs;
-
-        // Constants
-        const AIR_DENSITY = 1.2;       // kg/m³
-        const SPECIFIC_HEAT = 1.005;    // kJ/kg·K
-        const PERSON_HEAT = 0.1;        // kW per person
-        const SUNLIGHT_FACTOR = {
-            low: 0.2,
-            medium: 0.5,
-            high: 0.8
-        };
-        const INSULATION_FACTOR = {
-            low: 1.2,
-            medium: 1.0,
-            high: 0.8
-        };
-
-        // Calculate room volume
-        const roomVolume = roomArea * roomHeight; // m³
-
-        // Calculate temperature difference
-        const deltaT = roomTemperature - targetTemperature; // °C
-
-        // Basic cooling load (sensible heat)
-        let coolingLoad = AIR_DENSITY * roomVolume * SPECIFIC_HEAT * deltaT / 3600; // kW
-
-        // Add occupancy heat
-        coolingLoad += roomOccupancy * PERSON_HEAT;
-
-        // Add other heat sources
-        coolingLoad += heatSources;
-
-        // Apply sunlight factor
-        coolingLoad *= (1 + SUNLIGHT_FACTOR[sunlightExposure]);
-
-        // Apply insulation factor
-        coolingLoad *= INSULATION_FACTOR[insulationQuality];
-
-        // Latent heat calculation (humidity)
-        const latentHeat = 0.02 * humidity * roomVolume / 1000; // kW
-        coolingLoad += latentHeat;
-
-        // Convert to BTU/h (common cooling unit)
-        const coolingCapacityBTU = coolingLoad * 3412.14;
-
-        // Determine recommended cooler type
-        let recommendedType = '';
-        if (coolingCapacityBTU < 8000) {
-            recommendedType = 'Portable Air Cooler';
-        } else if (coolingCapacityBTU < 18000) {
-            recommendedType = 'Split AC (1.5 Ton)';
-        } else if (coolingCapacityBTU < 24000) {
-            recommendedType = 'Window AC (2 Ton)';
-        } else {
-            recommendedType = 'Central Cooling System';
-        }
-
-        return {
-            coolingLoadKW: coolingLoad.toFixed(2),
-            coolingCapacityBTU: Math.round(coolingCapacityBTU),
-            recommendedType,
-            calculationDetails: {
-                roomVolume: `${roomVolume} m³`,
-                temperatureDifference: `${deltaT} °C`,
-                sensibleHeat: `${(coolingLoad - latentHeat).toFixed(2)} kW`,
-                latentHeat: `${latentHeat.toFixed(2)} kW`,
-                totalHeatSources: `${(roomOccupancy * PERSON_HEAT + heatSources).toFixed(2)} kW`,
-                sunlightFactor: SUNLIGHT_FACTOR[sunlightExposure],
-                insulationFactor: INSULATION_FACTOR[insulationQuality]
-            }
-        };
-    };
 
     const applyFieldConstraints = (fields) => {
         return fields.map(field => {
@@ -155,34 +69,28 @@ const Cooler = () => {
 
 
     const handleCalculate = () => {
-        // Show loading spinner with translated texts
         Swal.fire({
-            title: t('calculating'), // Using t() to translate "Calculating..."
-            text: t('pleaseWait'), // Using t() to translate "Please wait while we calculate your cooling needs."
+            title: t('calculating'),
             allowOutsideClick: false,
             allowEscapeKey: false,
+            showConfirmButton: false,
+            backdrop: `
+            rgba(0,0,0,0.7)
+            url("/images/cooler-loading.gif")
+            center top
+            no-repeat
+        `,
             didOpen: () => {
                 Swal.showLoading();
             }
         });
 
-        // Simulate calculation delay (optional)
+
         setTimeout(() => {
-            const result = calculateCoolingRequirements(state);
-
-            Swal.fire({
-                title: t('calculationComplete'),
-                text: t('yourCoolingNeedsCalculated'),
-                icon: 'success',
-                confirmButtonText: t('viewResult')
-            }).then((res) => {
-                if (res.isConfirmed) {
-                    navigate('/result', { state: { result } });
-                }
-            });
-        }, 1000);
+            Swal.close();
+            navigate(`/output/${type}`);
+        }, 1500);
     };
-
 
     useEffect(() => {
         if (type) {

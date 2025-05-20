@@ -194,10 +194,29 @@ i18n
                         terms: "By continuing, you agree to our {terms} and {privacy}.",
                         termsLink: "Terms of Service",
                         privacyLink: "Privacy Policy"
-                    }
+                    },
+
+                    // Add these new translations:
+                    recommendedSolutions: "Recommended Solutions",
+                    keyFeatures: "Key Features",
+                    brochure: "Brochure",
+                    share: "Share",
+                    calculating: "Calculating...",
+                    pleaseWait: "Please wait while we calculate your cooling needs",
+                    calculationComplete: "Calculation Complete",
+                    viewResult: "View Result",
+                    noTitle: "No Title",
+                    // Add translations for any cooler model properties that might be displayed:
+                    refrigerant: "Refrigerant",
+                    tempRange: "Temperature Range",
+                    dimensions: "Dimensions",
+                    noiseLevel: "Noise Level"
+
+
 
 
                 },
+
             },
             es: {
                 translation: {
@@ -382,7 +401,21 @@ i18n
                         terms: "Al continuar, aceptas nuestros {terms} y nuestra {privacy}.",
                         termsLink: "Términos del servicio",
                         privacyLink: "Política de privacidad"
-                    }
+                    },
+
+                    recommendedSolutions: "Soluciones Recomendadas",
+                    keyFeatures: "Características Principales",
+                    brochure: "Folleto",
+                    share: "Compartir",
+                    calculating: "Calculando...",
+                    pleaseWait: "Por favor espere mientras calculamos sus necesidades de enfriamiento",
+                    calculationComplete: "Cálculo Completado",
+                    viewResult: "Ver Resultado",
+                    noTitle: "Sin Título",
+                    refrigerant: "Refrigerante",
+                    tempRange: "Rango de Temperatura",
+                    dimensions: "Dimensiones",
+                    noiseLevel: "Nivel de Ruido"
 
 
 
@@ -570,7 +603,21 @@ i18n
                         terms: "En continuant, vous acceptez nos {terms} et notre {privacy}.",
                         termsLink: "Conditions d'utilisation",
                         privacyLink: "Politique de confidentialité"
-                    }
+                    },
+
+                    recommendedSolutions: "Solutions Recommandées",
+                    keyFeatures: "Caractéristiques Clés",
+                    brochure: "Brochure",
+                    share: "Partager",
+                    calculating: "Calcul en cours...",
+                    pleaseWait: "Veuillez patienter pendant que nous calculons vos besoins en refroidissement",
+                    calculationComplete: "Calcul Terminé",
+                    viewResult: "Voir le Résultat",
+                    noTitle: "Pas de Titre",
+                    refrigerant: "Réfrigérant",
+                    tempRange: "Plage de Température",
+                    dimensions: "Dimensions",
+                    noiseLevel: "Niveau de Bruit"
 
 
 
@@ -759,7 +806,21 @@ i18n
                         terms: "Durch die Fortsetzung stimmen Sie unseren {terms} und unserer {privacy} zu.",
                         termsLink: "Nutzungsbedingungen",
                         privacyLink: "Datenschutzerklärung"
-                    }
+                    },
+
+                    recommendedSolutions: "Empfohlene Lösungen",
+                    keyFeatures: "Hauptmerkmale",
+                    brochure: "Broschüre",
+                    share: "Teilen",
+                    calculating: "Berechnung läuft...",
+                    pleaseWait: "Bitte warten Sie, während wir Ihren Kühlbedarf berechnen",
+                    calculationComplete: "Berechnung Abgeschlossen",
+                    viewResult: "Ergebnis Anzeigen",
+                    noTitle: "Kein Titel",
+                    refrigerant: "Kältemittel",
+                    tempRange: "Temperaturbereich",
+                    dimensions: "Abmessungen",
+                    noiseLevel: "Geräuschpegel"
 
 
                 },

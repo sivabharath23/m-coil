@@ -171,8 +171,8 @@
 
 .icon-option.active {
     border: 1px solid var(--primary);
-    background: var(--primary-light);
-    color: var(--primary);
+    background: var(--gradient-primary);
+    color: var(--light);
 }
 
 .icon-option span {

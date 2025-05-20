@@ -1,0 +1,77 @@
+{
+    "Condensing Unit": [
+        {
+            "id": 1,
+            "model": "MCCS-125MT",
+            "refrigerant": "R404A",
+            "capacity": "125 kW",
+            "tempRange": "-20°C to +10°C",
+            "dimensions": "L: 2500mm, W: 1200mm, H: 1800mm",
+            "features": [
+                "Energy efficient",
+                "Low noise operation",
+                "Easy maintenance"
+            ]
+        },
+        {
+            "id": 2,
+            "model": "MCCS-150MT",
+            "refrigerant": "R507",
+            "capacity": "150 kW",
+            "tempRange": "-25°C to +10°C",
+            "dimensions": "L: 2800mm, W: 1300mm, H: 1900mm",
+            "features": [
+                "High performance",
+                "Weatherproof design",
+                "Smart controls"
+            ]
+        },
+        {
+            "id": 3,
+            "model": "MCCS-100MT",
+            "refrigerant": "R134a",
+            "capacity": "100 kW",
+            "tempRange": "-15°C to +10°C",
+            "dimensions": "L: 2200mm, W: 1100mm, H: 1700mm",
+            "features": [
+                "Compact design",
+                "Eco-friendly",
+                "Quick installation"
+            ]
+        }
+    ],
+    "Selection Tool": [
+        {
+            "id": 1,
+            "model": "MEF 6306",
+            "refrigerant": "R404A",
+            "capacity": "75 kW",
+            "finSpacing": "4 mm",
+            "evaporatorTemp": "-10°C",
+            "airFlow": "4500 m³/h",
+            "numFans": 2,
+            "fanThrow": "12 m",
+            "dimensions": {
+                "length": 1800,
+                "width": 600,
+                "height": 750
+            }
+        },
+        {
+            "id": 2,
+            "model": "MEF 7100",
+            "refrigerant": "R507",
+            "capacity": "90 kW",
+            "finSpacing": "5 mm",
+            "evaporatorTemp": "-15°C",
+            "airFlow": "5200 m³/h",
+            "numFans": 3,
+            "fanThrow": "14 m",
+            "dimensions": {
+                "length": 2000,
+                "width": 700,
+                "height": 800
+            }
+        }
+    ]
+}

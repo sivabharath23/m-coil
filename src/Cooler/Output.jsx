@@ -317,22 +317,18 @@ const Output = () => {
 
                                 <div className="features-section">
                                     <h4>✨ {t('keyFeatures')}</h4>
-                                    <ul>
-                                        {cooler.features && cooler.features.length > 0 && (
-                                            <div className="features-section">
-                                                <h4>✨ {t('keyFeatures')}</h4>
-                                                <ul>
-                                                    {cooler.features.map((feature, index) => (
-                                                        <li key={index}>
-                                                            <FaChevronRight className="feature-icon" />
-                                                            {feature}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        )}
-
-                                    </ul>
+                                    {cooler.features && cooler.features.length > 0 && (
+                                        <div className="features-section">
+                                            <ul>
+                                                {cooler.features.map((feature, index) => (
+                                                    <li key={index}>
+                                                        <FaChevronRight className="feature-icon" />
+                                                        {feature}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 

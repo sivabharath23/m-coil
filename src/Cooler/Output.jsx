@@ -8,7 +8,7 @@ import { FaArrowRight, FaTimes } from 'react-icons/fa';
 
 import Swal from 'sweetalert2';
 import './Output.css';
-import OutputData from './Output.json';
+import OutputData from './output.json';
 
 const Output = () => {
     const { t } = useTranslation();

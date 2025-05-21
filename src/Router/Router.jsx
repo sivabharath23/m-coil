@@ -18,7 +18,7 @@ const Router = () => {
         <Route path="/settings" element={<Settings />} />
         <Route path="/cooler/:type" element={<Cooler />} />
         <Route path="/output/:type" element={<Output />} />
-        <Route path="/result" element={<Result />} />
+        <Route path="/result/:type" element={<Result />} />
       </Routes>
     </div>
   );

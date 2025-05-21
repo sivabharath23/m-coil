@@ -4,6 +4,8 @@ import { FaArrowLeft, FaTh, FaHome, FaUser, FaSnowflake, FaInfoCircle, FaDownloa
 import { IoMdOptions } from 'react-icons/io';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
+import { FaArrowRight, FaTimes } from 'react-icons/fa';
+
 import Swal from 'sweetalert2';
 import './Output.css';
 import OutputData from './Output.json';
@@ -18,7 +20,7 @@ const Output = () => {
     const handleBackClick = () => navigate(-1);
     const [coolerModels, setCoolerModels] = useState([]);
     const [title, setTitle] = useState('');
-    const gridRef = useRef(null);
+    const [selectedCooler, setSelectedCooler] = useState(null);
 
     // Scroll animation effect
     useEffect(() => {
@@ -69,96 +71,10 @@ const Output = () => {
         }
     }, [type, t]);
 
-    // Comprehensive cooling calculation function
-    const calculateCoolingRequirements = (inputs) => {
-        // Extract all input values with defaults
-        const {
-            roomTemperature = 30,      // °C
-            targetTemperature = 24,    // °C
-            roomArea = 20,             // m²
-            roomHeight = 3,            // m
-            humidity = 50,             // %
-            heatSources = 0,           // kW
-            insulationQuality = 'medium', // low/medium/high
-            roomOccupancy = 2,         // people
-            sunlightExposure = 'medium' // low/medium/high
-        } = inputs;
 
-        // Constants
-        const AIR_DENSITY = 1.2;       // kg/m³
-        const SPECIFIC_HEAT = 1.005;    // kJ/kg·K
-        const PERSON_HEAT = 0.1;        // kW per person
-        const SUNLIGHT_FACTOR = {
-            low: 0.2,
-            medium: 0.5,
-            high: 0.8
-        };
-        const INSULATION_FACTOR = {
-            low: 1.2,
-            medium: 1.0,
-            high: 0.8
-        };
-
-        // Calculate room volume
-        const roomVolume = roomArea * roomHeight; // m³
-
-        // Calculate temperature difference
-        const deltaT = roomTemperature - targetTemperature; // °C
-
-        // Basic cooling load (sensible heat)
-        let coolingLoad = AIR_DENSITY * roomVolume * SPECIFIC_HEAT * deltaT / 3600; // kW
-
-        // Add occupancy heat
-        coolingLoad += roomOccupancy * PERSON_HEAT;
-
-        // Add other heat sources
-        coolingLoad += heatSources;
-
-        // Apply sunlight factor
-        coolingLoad *= (1 + SUNLIGHT_FACTOR[sunlightExposure]);
-
-        // Apply insulation factor
-        coolingLoad *= INSULATION_FACTOR[insulationQuality];
-
-        // Latent heat calculation (humidity)
-        const latentHeat = 0.02 * humidity * roomVolume / 1000; // kW
-        coolingLoad += latentHeat;
-
-        // Convert to BTU/h (common cooling unit)
-        const coolingCapacityBTU = coolingLoad * 3412.14;
-
-        // Determine recommended cooler type
-        let recommendedType = '';
-        if (coolingCapacityBTU < 8000) {
-            recommendedType = 'Portable Air Cooler';
-        } else if (coolingCapacityBTU < 18000) {
-            recommendedType = 'Split AC (1.5 Ton)';
-        } else if (coolingCapacityBTU < 24000) {
-            recommendedType = 'Window AC (2 Ton)';
-        } else {
-            recommendedType = 'Central Cooling System';
-        }
-
-        return {
-            coolingLoadKW: coolingLoad.toFixed(2),
-            coolingCapacityBTU: Math.round(coolingCapacityBTU),
-            recommendedType,
-            calculationDetails: {
-                roomVolume: `${roomVolume} m³`,
-                temperatureDifference: `${deltaT} °C`,
-                sensibleHeat: `${(coolingLoad - latentHeat).toFixed(2)} kW`,
-                latentHeat: `${latentHeat.toFixed(2)} kW`,
-                totalHeatSources: `${(roomOccupancy * PERSON_HEAT + heatSources).toFixed(2)} kW`,
-                sunlightFactor: SUNLIGHT_FACTOR[sunlightExposure],
-                insulationFactor: INSULATION_FACTOR[insulationQuality]
-            }
-        };
-    };
-
-    const handleViewDetails = (modelId) => {
-        // Show loading spinner with translated texts
+    const handleViewDetails = (cooler) => {
         Swal.fire({
-            title: t('calculating'),
+            title: t('loading'),
             text: t('pleaseWait'),
             allowOutsideClick: false,
             allowEscapeKey: false,
@@ -168,215 +84,211 @@ const Output = () => {
         });
 
         setTimeout(() => {
-            const result = calculateCoolingRequirements(state);
-
-            Swal.fire({
-                title: t('calculationComplete'),
-                html: `
-                    <div class="swal-result">
-                        <div class="result-icon">
-                            <svg viewBox="0 0 36 36" class="circular-chart">
-                                <path class="circle-bg"
-                                    d="M18 2.0845
-                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                                />
-                                <path class="circle"
-                                    stroke-dasharray="${Math.min(100, (result.coolingLoadKW / 5) * 100)}, 100"
-                                    d="M18 2.0845
-                                    a 15.9155 15.9155 0 0 1 0 31.831
-                                    a 15.9155 15.9155 0 0 1 0 -31.831"
-                                />
-                                <text x="18" y="20.5" class="percentage">${result.coolingLoadKW} kW</text>
-                                <text x="18" y="25" class="label">Cooling Load</text>
-                            </svg>
-                        </div>
-                        <div class="result-details">
-                            <p><strong>Recommended:</strong> ${result.recommendedType}</p>
-                            <p><strong>Capacity:</strong> ${result.coolingCapacityBTU} BTU/h</p>
-                        </div>
-                    </div>
-                `,
-                icon: 'success',
-                confirmButtonText: t('viewResult'),
-                customClass: {
-                    popup: 'animated tada'
-                }
-            }).then((res) => {
-                if (res.isConfirmed) {
-                    navigate('/result', { state: { result } });
-                }
-            });
-        }, 1000);
+            Swal.close();
+            setSelectedCooler(cooler);
+        }, 500);
     };
 
+    const flattenObject = (obj, prefix = '') =>
+        Object.keys(obj).reduce((acc, k) => {
+            const pre = prefix.length ? prefix + '.' : '';
+            if (typeof obj[k] === 'object' && obj[k] !== null && !Array.isArray(obj[k])) {
+                Object.assign(acc, flattenObject(obj[k], pre + k));
+            } else {
+                acc[pre + k] = obj[k];
+            }
+            return acc;
+        }, {});
+
+
     return (
-        <div className="app-container">
-            <div className="app-header sticky-header">
-                <button className="icon-btn" onClick={handleBackClick}>
-                    <FaArrowLeft />
-                </button>
-                <h2 className='title'>{title}</h2>
-                <button className="icon-btn" onClick={toggleSidebar}>
-                    <IoMdOptions />
-                </button>
-            </div>
-
-            <div className='container'>
-                <div className="header-animation">
-                    <p className="subtitle">
-                        {t('recommendedSolutions')}
-                        <span className="animated-underline"></span>
-                    </p>
-                </div>
-
-                <div className="cooler-grid" ref={gridRef}>
-                    {coolerModels.map((cooler, index) => (
-                        <div
-                            key={cooler.id}
-                            className="cooler-card"
-                            style={{
-                                opacity: 0,
-                                transform: 'translateY(30px)',
-                                transition: `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`
-                            }}
-                        >
+        <>
+            {
+                selectedCooler && (
+                    <div className="custom-modal-overlay">
+                        <div className="custom-modal">
                             <div className="card-header">
-                                <div className="icon-container">
-                                    <FaSnowflake className="icon pulse" />
-                                </div>
+                                <div className="icon-container">❄️</div>
                                 <div className="header-content">
-                                    <h2>{cooler.model}</h2>
+                                    <h2>{selectedCooler.model}</h2>
                                     <div className="rating-badge">
-                                        {Array.from({ length: 5 }).map((_, i) => (
-                                            <span key={i} className={i < cooler.rating ? 'star filled' : 'star'}></span>
+                                        {[...Array(5)].map((_, i) => (
+                                            <span key={i} className={i < selectedCooler.rating ? 'star filled' : 'star'}>★</span>
                                         ))}
                                     </div>
                                 </div>
-                                <span className="capacity-badge">{cooler.capacity}</span>
+                                <span className="capacity-badge">{selectedCooler.capacity || '-'}</span>
                             </div>
 
                             <div className="card-body">
                                 <div className="spec-grid">
-                                    {cooler.refrigerant && (
-                                        <div className="spec-item">
-                                            <span className="spec-icon">❄️</span>
-                                            <span className="spec-label">Refrigerant:</span>
-                                            <span className="spec-value">{cooler.refrigerant}</span>
-                                        </div>
+                                    {selectedCooler.refrigerant && (
+                                        <div className="spec-item"><strong>❄️ Refrigerant:</strong> {selectedCooler.refrigerant}</div>
                                     )}
-                                    {cooler.tempRange && (
-                                        <div className="spec-item">
-                                            <span className="spec-icon">🌡️</span>
-                                            <span className="spec-label">Temp Range:</span>
-                                            <span className="spec-value">{cooler.tempRange}</span>
-                                        </div>
+                                    {selectedCooler.tempRange && (
+                                        <div className="spec-item"><strong>🌡️ Temp Range:</strong> {selectedCooler.tempRange}</div>
                                     )}
-                                    {cooler.evaporatorTemp && (
-                                        <div className="spec-item">
-                                            <span className="spec-icon">🌬️</span>
-                                            <span className="spec-label">Evaporator Temp:</span>
-                                            <span className="spec-value">{cooler.evaporatorTemp}</span>
-                                        </div>
+                                    {selectedCooler.evaporatorTemp && (
+                                        <div className="spec-item"><strong>🌬️ Evaporator Temp:</strong> {selectedCooler.evaporatorTemp}</div>
                                     )}
-                                    {cooler.airFlow && (
-                                        <div className="spec-item">
-                                            <span className="spec-icon">💨</span>
-                                            <span className="spec-label">Air Flow:</span>
-                                            <span className="spec-value">{cooler.airFlow}</span>
-                                        </div>
+                                    {selectedCooler.airFlow && (
+                                        <div className="spec-item"><strong>💨 Air Flow:</strong> {selectedCooler.airFlow}</div>
                                     )}
-                                    {cooler.numFans && (
-                                        <div className="spec-item">
-                                            <span className="spec-icon">🌀</span>
-                                            <span className="spec-label">Number of Fans:</span>
-                                            <span className="spec-value">{cooler.numFans}</span>
-                                        </div>
+                                    {selectedCooler.numFans && (
+                                        <div className="spec-item"><strong>🌀 Number of Fans:</strong> {selectedCooler.numFans}</div>
                                     )}
-                                    {cooler.fanThrow && (
-                                        <div className="spec-item">
-                                            <span className="spec-icon">↔️</span>
-                                            <span className="spec-label">Fan Throw:</span>
-                                            <span className="spec-value">{cooler.fanThrow}</span>
-                                        </div>
+                                    {selectedCooler.fanThrow && (
+                                        <div className="spec-item"><strong>↔️ Fan Throw:</strong> {selectedCooler.fanThrow}</div>
                                     )}
-                                    {cooler.dimensions && (
+                                    {selectedCooler.dimensions && (
                                         <div className="spec-item">
-                                            <span className="spec-icon">📏</span>
-                                            <span className="spec-label">Dimensions:</span>
-                                            <span className="spec-value">
-                                                {typeof cooler.dimensions === 'string'
-                                                    ? cooler.dimensions
-                                                    : `L: ${cooler.dimensions.length}mm, W: ${cooler.dimensions.width}mm, H: ${cooler.dimensions.height}mm`}
-                                            </span>
+                                            <strong>📏 Dimensions:</strong>{' '}
+                                            {typeof selectedCooler.dimensions === 'string'
+                                                ? selectedCooler.dimensions
+                                                : `L: ${selectedCooler.dimensions.length}mm, W: ${selectedCooler.dimensions.width}mm, H: ${selectedCooler.dimensions.height}mm`}
                                         </div>
                                     )}
                                 </div>
 
-
-
-                                <div className="features-section">
-                                    <h4>✨ {t('keyFeatures')}</h4>
-                                    {cooler.features && cooler.features.length > 0 && (
-                                        <div className="features-section">
-                                            <ul>
-                                                {cooler.features.map((feature, index) => (
-                                                    <li key={index}>
-                                                        <FaChevronRight className="feature-icon" />
-                                                        {feature}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    )}
-                                </div>
+                                {selectedCooler.features && selectedCooler.features.length > 0 && (
+                                    <div className="features-section">
+                                        <h4>✨ Key Features</h4>
+                                        <ul>
+                                            {selectedCooler.features.map((feature, index) => (
+                                                <li key={index}>➡️ {feature}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                )}
                             </div>
 
-                            <div className="card-footer">
-                                <div className="price-tag">
-                                    <span className="price">{cooler.price}</span>
-                                    {cooler.discount && <span className="discount">{cooler.discount}</span>}
-                                </div>
-                                <div className="action-buttons">
-                                    <button
-                                        className="action-btn download-btn"
-                                        onClick={() => handleViewDetails(cooler.id)}
-                                    >
-                                        <FaDownload /> {t('brochure')}
-                                    </button>
-                                    <button className="action-btn share-btn">
-                                        <FaShare /> {t('share')}
-                                    </button>
-                                </div>
+                            <div className="modal-footer">
+                                <button
+                                    className="btn btn-success btn-lg w-100"
+                                    onClick={() => navigate(`/result/${type}`)}
+                                >
+                                    <FaArrowRight style={{ marginRight: 8 }} />
+                                    {t('viewResult')}
+                                </button>
+                                <button
+                                    className="btn btn-outline-danger btn-lg w-100"
+                                    onClick={() => setSelectedCooler(null)}
+                                >
+                                    <FaTimes style={{ marginRight: 8 }} />
+                                    Close
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                )
+            }
+            <div className="app-container">
+                <div className="app-header sticky-header">
+                    <button className="icon-btn" onClick={handleBackClick}>
+                        <FaArrowLeft />
+                    </button>
+                    <h2 className='title'>{title}</h2>
+                    <button className="icon-btn" onClick={toggleSidebar}>
+                        <IoMdOptions />
+                    </button>
+                </div>
+
+                <div className='container'>
+                    <div className="header-animation">
+                        <p className="subtitle">
+                            <FaSnowflake /> {t('recommendedSolutions')}
+                            <span className="animated-underline"></span>
+                        </p>
+                    </div>
+
+                    {coolerModels.length > 0 ? (
+                        <div className="specs-table-container">
+                            <table className="specs-table">
+                                <thead>
+                                    <tr>
+                                        <th>S.No</th>
+                                        {Object.keys(flattenObject(coolerModels[0])).map((key, idx) => (
+                                            <th key={idx}>
+                                                {key
+                                                    .replace(/\./g, ' ')
+                                                    .replace(/([a-z])([A-Z])/g, '$1 $2')
+                                                    .replace(/_/g, ' ')
+                                                    .replace(/\b\w/g, c => c.toUpperCase())}
+                                            </th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {coolerModels.map((cooler, index) => {
+                                        const flatCooler = flattenObject(cooler);
+                                        return (
+                                            <tr key={cooler.id}>
+                                                <td>{index + 1}</td>
+                                                {Object.entries(flatCooler).map(([key, value], i) => (
+                                                    <td key={i}>
+                                                        {key === 'model' ? (
+                                                            <button
+                                                                className="model-link"
+                                                                onClick={() => handleViewDetails(cooler)}
+                                                            >
+                                                                {value}
+                                                            </button>
+                                                        ) : (
+                                                            typeof value === 'string' || typeof value === 'number' ? value : '-'
+                                                        )}
+                                                    </td>
+                                                ))}
+
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    ) : (
+                        <div className="no-results">
+                            <div className="no-results-icon">
+                                <FaInfoCircle />
+                            </div>
+                            <h3>{t('noResultsTitle')}</h3>
+                            <p>{t('noResultsMessage')}</p>
+                            <div className='nores-btn'>
+                                <button
+                                    className="btn-primary"
+                                    onClick={handleBackClick}
+                                >
+                                    <FaArrowLeft /> {t('goBack')}
+                                </button>
                             </div>
                         </div>
-                    ))}
+                    )}
+                </div>
+
+                {/* Floating action button */}
+                <div className="floating-action">
+                    <button className="fab" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                        ↑
+                    </button>
+                </div>
+
+                {/* Bottom Navigation */}
+                <div className="bottom-nav">
+                    <button className="btn" onClick={toggleSidebar}>
+                        <FaTh />
+                        <span className="btn-label">{t('menu')}</span>
+                    </button>
+                    <Link className="btn" to="/home">
+                        <FaHome />
+                        <span className="btn-label">{t('home')}</span>
+                    </Link>
+                    <Link className="btn" to="/profile">
+                        <FaUser />
+                        <span className="btn-label">{t('profile')}</span>
+                    </Link>
                 </div>
             </div>
-
-            {/* Floating action button */}
-            <div className="floating-action">
-                <button className="fab" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                    ↑
-                </button>
-            </div>
-
-            {/* Bottom Navigation */}
-            <div className="bottom-nav">
-                <button className="btn" onClick={toggleSidebar}>
-                    <FaTh />
-                    <span className="btn-label">{t('menu')}</span>
-                </button>
-                <Link className="btn" to="/home">
-                    <FaHome />
-                    <span className="btn-label">{t('home')}</span>
-                </Link>
-                <Link className="btn" to="/profile">
-                    <FaUser />
-                    <span className="btn-label">{t('profile')}</span>
-                </Link>
-            </div>
-        </div>
+        </>
     );
 };
 

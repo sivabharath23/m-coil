@@ -4,8 +4,8 @@
         "backgroundImage": "/assets/images/condensing-unit.webp"
     },
     {
-        "name": "Selection Tool",
-        "backgroundImage": "/assets/images/selection-tool.webp"
+        "name": "Evaporator Coil",
+        "backgroundImage": "/assets/images/Evaporator-coil.webp"
     },
     {
         "name": "Condenser Coils",
@@ -14,10 +14,6 @@
     {
         "name": "Heat Exchanger",
         "backgroundImage": "/assets/images/heatExchange.webp"
-    },
-    {
-        "name": "Evaporator Coils",
-        "backgroundImage": "/assets/images/Evaporator-coil.webp"
     },
     {
         "name": "Dry Coolers",

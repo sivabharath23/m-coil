@@ -210,7 +210,12 @@ i18n
                     refrigerant: "Refrigerant",
                     tempRange: "Temperature Range",
                     dimensions: "Dimensions",
-                    noiseLevel: "Noise Level"
+                    noiseLevel: "Noise Level",
+
+                    noResultsTitle: "No Results Found",
+                    noResultsMessage: "We couldn't find any matching records. Try adjusting your filters or search terms.",
+                    goBack: "Go Back"
+
 
 
 
@@ -415,7 +420,13 @@ i18n
                     refrigerant: "Refrigerante",
                     tempRange: "Rango de Temperatura",
                     dimensions: "Dimensiones",
-                    noiseLevel: "Nivel de Ruido"
+                    noiseLevel: "Nivel de Ruido",
+
+
+                    noResultsTitle: "No se encontraron resultados",
+                    noResultsMessage: "No pudimos encontrar registros coincidentes. Intenta ajustar tus filtros o términos de búsqueda.",
+                    goBack: "Regresar"
+
 
 
 
@@ -617,7 +628,13 @@ i18n
                     refrigerant: "Réfrigérant",
                     tempRange: "Plage de Température",
                     dimensions: "Dimensions",
-                    noiseLevel: "Niveau de Bruit"
+                    noiseLevel: "Niveau de Bruit",
+
+                    noResultsTitle: "Aucun résultat trouvé",
+                    noResultsMessage: "Aucun enregistrement correspondant trouvé. Essayez de modifier vos filtres ou vos termes de recherche.",
+                    goBack: "Retour"
+
+
 
 
 
@@ -820,7 +837,12 @@ i18n
                     refrigerant: "Kältemittel",
                     tempRange: "Temperaturbereich",
                     dimensions: "Abmessungen",
-                    noiseLevel: "Geräuschpegel"
+                    noiseLevel: "Geräuschpegel",
+
+                    noResultsTitle: "Keine Ergebnisse gefunden",
+                    noResultsMessage: "Wir konnten keine passenden Einträge finden. Versuchen Sie, Ihre Filter oder Suchbegriffe anzupassen.",
+                    goBack: "Zurück"
+
 
 
                 },

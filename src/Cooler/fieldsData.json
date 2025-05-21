@@ -40,7 +40,7 @@
             "section": "Cooling Parameters"
         }
     ],
-    "Selection Tool": [
+    "Evaporator Coil": [
         {
             "name": "coolingCapacity",
             "type": "number",
@@ -283,52 +283,6 @@
             "default": 0,
             "min": 0,
             "max": 5000
-        }
-    ],
-    "Evaporator Coils": [
-        {
-            "name": "capacity",
-            "type": "number",
-            "section": "Air Cooler Settings",
-            "default": 5,
-            "min": 1,
-            "max": 100
-        },
-        {
-            "name": "fluidType",
-            "type": "select(button)",
-            "section": "Fluid Settings",
-            "options": [
-                {
-                    "value": "R513A",
-                    "label": "R513A"
-                },
-                {
-                    "value": "R744",
-                    "label": "R744"
-                },
-                {
-                    "value": "A2L",
-                    "label": "A2L/A3"
-                }
-            ],
-            "default": "R513A"
-        },
-        {
-            "name": "evapTemp",
-            "type": "number",
-            "section": "Fluid Settings",
-            "default": -8,
-            "min": -40,
-            "max": 10
-        },
-        {
-            "name": "superheating",
-            "type": "number",
-            "section": "Fluid Settings",
-            "default": 5.2,
-            "min": 0,
-            "max": 20
         }
     ],
     "Heat Exchanger": [

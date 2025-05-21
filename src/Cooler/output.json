@@ -5,8 +5,16 @@
             "model": "MCCS-125MT",
             "refrigerant": "R404A",
             "capacity": "125 kW",
-            "tempRange": "-20°C to +10°C",
-            "dimensions": "L: 2500mm, W: 1200mm, H: 1800mm",
+            "finSpacing": "-",
+            "evaporatorTemp": "-20°C to +10°C",
+            "airFlow": "-",
+            "noOfFans": "-",
+            "fanThrow": "-",
+            "dimensions": {
+                "L": "2500 mm",
+                "W": "1200 mm",
+                "H": "1800 mm"
+            },
             "features": [
                 "Energy efficient",
                 "Low noise operation",
@@ -15,28 +23,44 @@
         },
         {
             "id": 2,
-            "model": "MCCS-150MT",
-            "refrigerant": "R507",
-            "capacity": "150 kW",
-            "tempRange": "-25°C to +10°C",
-            "dimensions": "L: 2800mm, W: 1300mm, H: 1900mm",
+            "model": "MCCS-125MT",
+            "refrigerant": "R404A",
+            "capacity": "125 kW",
+            "finSpacing": "-",
+            "evaporatorTemp": "-20°C to +10°C",
+            "airFlow": "-",
+            "noOfFans": "-",
+            "fanThrow": "-",
+            "dimensions": {
+                "L": "2500 mm",
+                "W": "1200 mm",
+                "H": "1800 mm"
+            },
             "features": [
-                "High performance",
-                "Weatherproof design",
-                "Smart controls"
+                "Energy efficient",
+                "Low noise operation",
+                "Easy maintenance"
             ]
         },
         {
             "id": 3,
-            "model": "MCCS-100MT",
-            "refrigerant": "R134a",
-            "capacity": "100 kW",
-            "tempRange": "-15°C to +10°C",
-            "dimensions": "L: 2200mm, W: 1100mm, H: 1700mm",
+            "model": "MCCS-125MT",
+            "refrigerant": "R404A",
+            "capacity": "125 kW",
+            "finSpacing": "-",
+            "evaporatorTemp": "-20°C to +10°C",
+            "airFlow": "-",
+            "noOfFans": "-",
+            "fanThrow": "-",
+            "dimensions": {
+                "L": "2500 mm",
+                "W": "1200 mm",
+                "H": "1800 mm"
+            },
             "features": [
-                "Compact design",
-                "Eco-friendly",
-                "Quick installation"
+                "Energy efficient",
+                "Low noise operation",
+                "Easy maintenance"
             ]
         }
     ],

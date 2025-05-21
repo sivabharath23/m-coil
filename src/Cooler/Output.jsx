@@ -13,7 +13,6 @@ import OutputData from './Output.json';
 const Output = () => {
     const { t } = useTranslation();
     const { type } = useParams();
-    const [state, setState] = useState({});
     const navigate = useNavigate();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);

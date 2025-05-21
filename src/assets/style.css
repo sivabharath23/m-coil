@@ -428,6 +428,11 @@ hr {
     overflow-y: auto;
 }
 
+.custom-modal .card-body {
+    height: 380px;
+    overflow-y: auto;
+}
+
 .app-container {
     max-width: 100%;
     overflow-x: visible;

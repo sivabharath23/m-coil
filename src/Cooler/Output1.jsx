@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import './Output1.css';
-import OutputData from './Output.json';
+import OutputData from './output.json';
 
 const Output = () => {
     const { t } = useTranslation();

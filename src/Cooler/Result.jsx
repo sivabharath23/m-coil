@@ -8,6 +8,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import './../assets/style.css';
 import './Cooler.css';
 import logo from './../assets/logo.png';
+import logo1 from './../assets/cool.png';
 import { useTranslation } from 'react-i18next';
 import html2pdf from 'html2pdf.js';
 import { useParams } from 'react-router-dom';
@@ -75,7 +76,10 @@ const Result = () => {
         images: [
             '/assets/images/modals/m125.png',
 
-        ]
+        ],
+        graph: [
+            '/assets/images/modals/graph.png',
+        ],
     };
 
     const conResultData = {
@@ -132,15 +136,15 @@ const Result = () => {
             "Sight Glass (Made In EU)",
             "Rotalock Valve (Danfoss Make)",
             "Filter Drier (Danfoss Make Adjustable)",
-            "HP/LP Controls",
-            "Suction Line (included)",
-            "Discharge Line (included)",
-            "Liquid Line (included)"
+            "HP/LP Controls"
         ],
 
         images: [
             '/assets/images/modals/m125.png',
 
+        ],
+        graph: [
+            '/assets/images/modals/graph.png',
         ],
 
         notes: [
@@ -179,6 +183,8 @@ const Result = () => {
                 <div className="template-header">
                     <div className="template-logo">
                         <img src={logo} alt="Company Logo" className="logo-image" />
+                        <img src={logo1} alt="Company Logo" className="logo-image" />
+
                     </div>
                 </div>
                 <hr className="divider" />
@@ -272,6 +278,16 @@ const Result = () => {
                     </div>
                 </div>
 
+                <div className="images-section">
+                    <div className="image-gallery">
+                        {conResultData.graph.map((imageUrl, index) => (
+                            <div className="image-container" key={index}>
+                                <img src={imageUrl} alt={`graph ${index + 1}`} className="product-image" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
                 {/* Important Notes Section */}
                 <div className="spec-section notes-section">
                     <h4 className="section-subtitle">Important Notes:</h4>
@@ -301,6 +317,8 @@ const Result = () => {
                 <div className="template-header">
                     <div className="template-logo">
                         <img src={logo} alt="Company Logo" className="logo-image" />
+                        <img src={logo1} alt="Company Logo" className="logo-image" />
+
                     </div>
                 </div>
                 <hr className="divider" />
@@ -449,6 +467,18 @@ const Result = () => {
                     </div>
                 </div>
 
+                {/* Graph Section */}
+                <div className="images-section">
+                    <div className="image-gallery">
+                        {conResultData.graph.map((imageUrl, index) => (
+                            <div className="image-container" key={index}>
+                                <img src={imageUrl} alt={`Graph  ${index + 1}`} className="product-image" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+
                 {/* Important Notes Section */}
                 <div className="spec-section notes-section">
                     <h4 className="section-subtitle">Important Notes:</h4>
@@ -482,6 +512,7 @@ const Result = () => {
                     <div className="template-header">
                         <div className="template-logo">
                             <img src={logo} alt="Company Logo" className="logo-image" />
+                            <img src={logo1} alt="Company Logo" className="logo-image" />
                         </div>
                         <div className="template-header-info">
                             <h4>MICRO COILS AND REFRIGERATION PVT LTD.</h4>
@@ -588,7 +619,7 @@ const Result = () => {
         const fileName = title ? `${title.replace(/\s+/g, '_')}.pdf` : 'cooling-results.pdf';
 
         const opt = {
-            margin: 10,
+            margin: 2,
             filename: fileName,
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },

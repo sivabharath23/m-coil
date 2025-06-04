@@ -157,7 +157,7 @@ const Cooler = () => {
                         }}
                     >
                         <FaSearch className="tab-icon" />
-                        <span>{t('searchCoolers')}</span> {/* Translates 'Search Coolers' */}
+                        <span>{t('search')}</span> {/* Translates 'Search Coolers' */}
                     </button>
                     <button
                         className={`tab-btn ${activeTab === 'calculate' ? 'active' : ''}`}
@@ -300,7 +300,7 @@ const Cooler = () => {
                                 {activeTab === 'search' ? (
                                     <>
                                         <FaSearch className="btn-icon" />
-                                        {t('searchCoolers')} {/* Translates 'Search Coolers' */}
+                                        {t('search')} {/* Translates 'Search Coolers' */}
                                     </>
                                 ) : (
                                     <>
